@@ -5,38 +5,38 @@ from random import choice
 import statistics 
 
 startingSudoku = """
-                    024007000
-                    600000000
-                    003680415
-                    431005000
-                    500000032
-                    790000060
-                    209710800
-                    040093000
-                    310004750
+                    530070000
+                    600195000
+                    098000060
+                    800060003
+                    400803001
+                    700020006
+                    060000280
+                    000419005
+                    000080079
                 """
 
 sudoku = np.array([[int(i) for i in line] for line in startingSudoku.split()])
 
-def PrintSudoku(sudoku):
-    print("\n")
-    for i in range(len(sudoku)):
-        line = ""
-        if i == 3 or i == 6:
-            print("---------------------")
-        for j in range(len(sudoku[i])):
-            if j == 3 or j == 6:
-                line += "| "
-            line += str(sudoku[i,j])+" "
-        print(line)
-
-def FixSudokuValues(fixed_sudoku):
-    for i in range (0,9):
-        for j in range (0,9):
-            if fixed_sudoku[i,j] != 0:
-                fixed_sudoku[i,j] = 1
-    
-    return(fixed_sudoku)
+# def PrintSudoku(sudoku):
+#     print("\n")
+#     for i in range(len(sudoku)):
+#         line = ""
+#         if i == 3 or i == 6:
+#             print("---------------------")
+#         for j in range(len(sudoku[i])):
+#             if j == 3 or j == 6:
+#                 line += "| "
+#             line += str(sudoku[i,j])+" "
+#         print(line)
+#
+# def FixSudokuValues(fixed_sudoku):
+#     for i in range (0,9):
+#         for j in range (0,9):
+#             if fixed_sudoku[i,j] != 0:
+#                 fixed_sudoku[i,j] = 1
+#
+#     return(fixed_sudoku)
 
 # Cost Function    
 def CalculateNumberOfErrors(sudoku):
