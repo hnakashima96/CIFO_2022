@@ -1,20 +1,7 @@
 import numpy as np
 import random
-import sys
+from data_sudoku import grid
 
-startingSudoku = """
-                    530070000
-                    600195000
-                    098000060
-                    800060003
-                    400803001
-                    700020006
-                    060000280
-                    000419005
-                    000080079
-                """
-
-grid = np.array([[int(i) for i in line] for line in startingSudoku.split()])
 
 #classe para identificar se o valor existe em linha, coluna ou quadrado 3x3
 class evaluation(object):
@@ -51,21 +38,17 @@ class evaluation(object):
 def get_neighbour():
     #copiar a grid inicial
     init_grid = np.copy(grid)
-    #print(init_grid)
     comparison = evaluation(init_grid)
-    #print(comparison)
     #definir quais valores da grid_i não são zeros (comparar com o sudoku)
     for row in range(9):
         for column in range(9):
             if init_grid[row][column] == 0:
                 #definir um valor para o espaço vazio
-                hiromi = random.randint(1, 9)
-                #print(row, column, hiromi)
+                value = random.randint(1, 9)
                 #identificar se esse valor existe na linha enquanto existir escolher outra opção
-                while comparison.rep_row(row, hiromi):
-                    hiromi = random.randint(1, 9)
-                    #print(row, column, hiromi)
-                init_grid[row][column] = - hiromi
+                while comparison.rep_row(row, value):
+                    value = random.randint(1, 9)
+                init_grid[row][column] = - value
     #se não existe pode aceitar
             else:
                 init_grid[row][column] = grid[row][column]

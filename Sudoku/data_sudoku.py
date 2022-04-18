@@ -12,4 +12,4 @@ startingSudoku = """
                     000080079
                 """
 
-sudoku = np.array([[int(i) for i in line] for line in startingSudoku.split()])
+grid = np.array([[int(i) for i in line] for line in startingSudoku.split()])
