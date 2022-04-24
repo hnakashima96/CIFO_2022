@@ -1,6 +1,6 @@
 from random import uniform
 
-def fps(population):
+def roulette(population):
     total_fitness = sum([i.fitness for i in population])
     spin = uniform(0, total_fitness)
     position = 0

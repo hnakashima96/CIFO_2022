@@ -1,6 +1,8 @@
 import numpy as np
 import random
-from data_sudoku import grid
+from Sudoku.data_sudoku import grid
+from charles import Individual, Population
+from copy import deepcopy
 
 
 #classe para identificar se o valor existe em linha, coluna ou quadrado 3x3
@@ -35,9 +37,9 @@ class evaluation(object):
         return False
 
 #gerou uma inicialização
-def get_neighbour():
+def get_neighbour(self):
     #copiar a grid inicial
-    init_grid = np.copy(grid)
+    init_grid = np.copy(self)
     comparison = evaluation(init_grid)
     #definir quais valores da grid_i não são zeros (comparar com o sudoku)
     for row in range(9):
@@ -51,15 +53,14 @@ def get_neighbour():
                 init_grid[row][column] = - value
     #se não existe pode aceitar
             else:
-                init_grid[row][column] = grid[row][column]
+                init_grid[row][column] = self[row][column]
     return init_grid
 
-prob_sol = get_neighbour()
 
 #funçao para definir o fitness de cada provável solução
 def fitness(prob_sol):
 
-    #calcular se os valores da possível solução existe em uma coluna
+    #calcular se os valores da possível solução existe em uma coluna ou em um bloco
     value = 0
     for row in range(9):
         for column in range(9):
@@ -70,6 +71,17 @@ def fitness(prob_sol):
 
     return value
 
-print(fitness(prob_sol))
+#Monkey Patching
+Individual.fitness = fitness
+Individual.get_neighbours = get_neighbour
+
+
+pop = Population(
+    size=5,
+    optim='min',
+    grid=grid
+)
+
+
 
 
