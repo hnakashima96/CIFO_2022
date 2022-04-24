@@ -18,16 +18,20 @@ P = Population(
 M = 5
 Operator = 'crossover'
 #loop
-    #create a pop p with M individuals (aqui aplicar selection algorithm)
+    #create a pop p with M individuals
 p = []
 for i in range(M):
     while len(p) < i:
         choice = random.choice(P)
-        p.append(choice)
+        p.append(choice.solution)
 
-    #select 2 individuals
+    #select 2 individuals (aqui aplicar selection algorithm)
+    #teste com random choice
+selection = random.choice(p)
+print(selection)
 
-    #apply crossover or reproduction
+    #apply crossover (1 point)
+
 
     #apply mutation
 

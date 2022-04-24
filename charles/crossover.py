@@ -1,7 +1,7 @@
 from random import randint
 
 def CO(p1, p2):
-    
+
     return offspring1, offspring2
 
 def single_point_co(p1, p2):
