@@ -1,14 +1,15 @@
-from random import randint
+import random
+import numpy as np
 
-def CO(p1, p2):
+def co_singlepoint(p):
+    p1 = random.choice(p)
+    p2 = random.choice(p)
+    while np.array_equal(p1,p2):
+        p2 = random.choice(p)
 
-    return offspring1, offspring2
+    #apply crossover (1 point)
+    co_point = random.randint(1, len(p1.solution)-1)
+    offspring1 = np.vstack((p1.solution[:co_point],p2.solution[co_point:]))
+    offspring2 = np.vstack((p2.solution[:co_point],p1.solution[co_point:]))
 
-def single_point_co(p1, p2):
-    co_point = randint(1, len(p1)-1)
-
-    offspring1 = p1[:co_point] + p2[co_point:]
-    offspring2 = p2[:co_point] + p1[co_point:]
-
-    return offspring1, offspring2
-
+    return p1, p2, offspring1, offspring2
