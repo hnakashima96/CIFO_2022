@@ -1,20 +1,28 @@
-from random import randint
+from itertools import permutations
+import math
+import random
 
-def template_mutation(individual):
+def mutation(mutation_choice):
+    line_index = random.choice(range(len(mutation_choice.solution)))
+    line_choice = mutation_choice.solution[line_index]
 
-    return individual
 
-def binary_mutation(individual):
+    #identifying values and positions to change
+    position_numbers = []
+    change_numbers = []
+    for index, value in enumerate(line_choice):
+        if value < 0:
+            position_numbers.append(index)
+            change_numbers.append(value)
 
-    mut_point = randint(0, (len(individual)-1))
+    #permutation of possible values (mutation)
+    possible = list(permutations(change_numbers))
+    mutation = random.randrange(math.factorial(len(change_numbers)))
 
-    if individual[mut_point] == 0:
-        individual[mut_point] = 1
-    elif individual[mut_point] == 1:
-        individual[mut_point] = 0
-    else:
-        raise Exception(
-            f"Trying to do binary mutation on {individual}. But it's not binary"
-        )
-    return individual
+    #add the resut in pop
+    for index_p, position in enumerate(position_numbers):
+        line_choice[position] = possible[mutation][index_p]
 
+    mutation_choice.solution[line_index] == line_choice
+
+    return (mutation_choice.solution)

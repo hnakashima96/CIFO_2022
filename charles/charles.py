@@ -1,6 +1,3 @@
-from random import choice, sample
-from Sudoku.data_sudoku import grid
-
 class Individual:
     def __init__(self, grid):
         self.grid = grid
@@ -27,6 +24,7 @@ class Population:
             self.individuals.append(
                 Individual(grid = self.grid)
             )
+
 
     def __len__(self):
         return len(self.individuals)

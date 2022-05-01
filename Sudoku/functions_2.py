@@ -1,9 +1,8 @@
 import numpy as np
 import random
 from Sudoku.data_sudoku import grid
-from charles import Individual, Population
-from copy import deepcopy
-
+#from charles.charles import Individual
+import charles
 
 #classe para identificar se o valor existe em linha, coluna ou quadrado 3x3
 class evaluation(object):
@@ -71,16 +70,7 @@ def fitness(prob_sol):
 
     return value
 
-#Monkey Patching
-Individual.fitness = fitness
-Individual.get_neighbours = get_neighbour
 
-
-pop = Population(
-    size=5,
-    optim='min',
-    grid=grid
-)
 
 
 
