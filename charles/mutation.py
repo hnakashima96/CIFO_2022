@@ -6,7 +6,6 @@ def mutation(mutation_choice):
     line_index = random.choice(range(len(mutation_choice.solution)))
     line_choice = mutation_choice.solution[line_index]
 
-
     #identifying values and positions to change
     position_numbers = []
     change_numbers = []

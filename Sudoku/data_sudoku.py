@@ -13,3 +13,4 @@ startingSudoku = """
                 """
 
 grid = np.array([[int(i) for i in line] for line in startingSudoku.split()])
+

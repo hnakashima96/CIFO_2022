@@ -49,6 +49,7 @@ def GA(P,M):
     mutant_index = random.choice(range(len(P)))
     mutant = P[mutant_index]
 
-    P[mutant_index] = Individual(mutation(mutant))
+    P.individuals[mutant_index] = Individual(mutation(mutant))
+
     return P
 

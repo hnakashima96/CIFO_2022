@@ -25,7 +25,6 @@ class Population:
                 Individual(grid = self.grid)
             )
 
-
     def __len__(self):
         return len(self.individuals)
 
