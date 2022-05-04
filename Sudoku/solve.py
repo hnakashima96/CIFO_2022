@@ -42,7 +42,9 @@ while flag_sucesso == False:
         )
 
         pop2 = GA(pop1,M)
+
         fitness_min = 100
+
         for i in range(len(pop2)):
             if pop2.individuals[i].fitness < fitness_min:
                 fitness_min = pop2.individuals[i].fitness

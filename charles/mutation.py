@@ -3,8 +3,8 @@ import math
 import random
 
 def mutation(mutation_choice):
-    line_index = random.choice(range(len(mutation_choice.solution)))
-    line_choice = mutation_choice.solution[line_index]
+    line_index = random.choice(range(len(mutation_choice)))
+    line_choice = mutation_choice[line_index]
 
     #identifying values and positions to change
     position_numbers = []
@@ -22,6 +22,6 @@ def mutation(mutation_choice):
     for index_p, position in enumerate(position_numbers):
         line_choice[position] = possible[mutation][index_p]
 
-    mutation_choice.solution[line_index] == line_choice
+    mutation_choice[line_index] == line_choice
 
-    return (mutation_choice.solution)
+    return (mutation_choice)
