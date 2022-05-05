@@ -2,8 +2,6 @@ from Sudoku.data_sudoku import grid
 from Sudoku.functions_2 import get_neighbour, fitness
 from charles.charles import Population, Individual
 from charles.GA import GA
-import numpy as np
-from charles.crossover import co_singlepoint
 
 sudoku_grid = grid
 
