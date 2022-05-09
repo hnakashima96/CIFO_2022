@@ -7,7 +7,7 @@ from charles.charles import Individual
 def GA(P):
     #inicializa uma probabilidade 
     p=0.1
-
+    p_mu = 0.5
     #selection
     first_sel = tournament(P)
     second_sel = tournament(P)
@@ -20,9 +20,9 @@ def GA(P):
         offspring1, offspring2 = first_sel, second_sel
 
     #apply mutation on the offsprings and substitute in the actual population
-    if random() < p:
+    if random() < p_mu:
         offspring1 = swap_mutation(offspring1)
-    if random() < p:
+    if random() < p_mu:
         offspring2 = mutation(offspring2)
     
     return [Individual(offspring1.solution), Individual(offspring2.solution)]

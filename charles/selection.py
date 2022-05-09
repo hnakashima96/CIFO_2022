@@ -11,7 +11,7 @@ def roulette(population):
         if position > spin:
             return individual
 
-def tournament(population, size=20):
+def tournament(population, size=5):
     """Tournament selection implementation.
 
     Args:
