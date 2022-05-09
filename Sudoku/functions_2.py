@@ -1,8 +1,6 @@
 import numpy as np
 import random
-from Sudoku.data_sudoku import grid
-#from charles.charles import Individual
-import charles
+
 
 #classe para identificar se o valor existe em linha, coluna ou quadrado 3x3
 class evaluation(object):
@@ -35,7 +33,7 @@ class evaluation(object):
                     return True
         return False
 
-#gerou uma inicialização
+
 def get_neighbour(self):
     #copiar a grid inicial
     init_grid = np.copy(self)
@@ -55,23 +53,46 @@ def get_neighbour(self):
                 init_grid[row][column] = self[row][column]
     return init_grid
 
+def split(array, nrows, ncols):
+    '''
+    Função para dividir uma matriz de sudoko em uma lista de submatrizes.
+    '''
+
+    h = array.shape[1]
+    return (array.reshape(h//nrows, nrows, -1, ncols)
+                 .swapaxes(1, 2)
+                 .reshape(-1, nrows, ncols))
 
 #funçao para definir o fitness de cada provável solução
 def fitness(prob_sol):
 
-    #calcular se os valores da possível solução existe em uma coluna ou em um bloco
-    value = 0
-    for row in range(9):
-        for column in range(9):
-            if prob_sol[row][column] < 0:
-                if evaluation(grid).rep_column(row, prob_sol[row][column]) \
-                        or evaluation(grid).rep_square(row, column, prob_sol[row][column]):
-                    value += 1
+    #coloca todos os valores do sudoko como positivo para fazer avaliação de duplicados
+    #sem isso, o mesmo número no sudoko, mas negativo, não seria considerado duplicado
+    prob_sol = np.abs(prob_sol)
 
-    return value
+    #inicializa o fit
+    total_fit = 0
 
+    #conta duplicados de cada linha
+    for i in range(9):
+        #a função unique gera um array com os valores unicos e outro com o count desses valores no array avaliado
+        #exemplo: input:[1,1,3,4,5], output: [1,3,4,5] e [2,1,1,1]
+        unique, counts = np.unique(prob_sol[:,i], return_counts=True) 
 
+        #soma o count maiores que 1
+        total_fit += sum(np.where(counts>1,counts-1,0))
+    
+    #conta duplicados de cada coluna
+    for i in range(9):
+        unique, counts = np.unique(prob_sol[i,:], return_counts=True)
+        total_fit += sum(np.where(counts>1,counts-1,0))
 
+    #divide o sudoko em uma lista de sub-matrizes
+    sub_matrix = split(prob_sol,3,3)
 
+    #avalia duplicados em cada sub-matriz
+    for i in sub_matrix:
+        unique, counts = np.unique(i, return_counts=True)
+        total_fit += sum(np.where(counts>1,counts-1,0))
 
-
+    return total_fit
