@@ -1,5 +1,5 @@
 from Sudoku.data_sudoku import grid
-from Sudoku.functions import get_neighbour, fitness
+from Sudoku.functions import get_neighbour, fitness_max
 from charles.charles import Population, Individual
 from charles.GA import GA
 from operator import attrgetter
@@ -9,7 +9,7 @@ import timeit
 sudoku_grid = grid
 
 # define monkey patch of the charles functions
-Individual.fitness = fitness
+Individual.fitness = fitness_max
 Individual.get_neighbours = get_neighbour
 
 pop_size = 1000
@@ -17,7 +17,7 @@ pop_size = 1000
 #initial population
 pop = Population(
             size=pop_size,
-            optim='min',
+            optim='max',
             grid=sudoku_grid
         )
 
@@ -34,7 +34,7 @@ start = timeit.default_timer()
 while flag_sucesso == False:
     
     #inicializa a nova população de offspring
-    off_pop = Population(0,'min',grid)
+    off_pop = Population(0,'max',grid)
     
     #loop até a off_pop tiver o tamanho da parent pop
     while len(off_pop) < pop_size:
@@ -46,9 +46,13 @@ while flag_sucesso == False:
     #pega o indivíduo com o menor valor de fitness
     best_fit = min(pop, key=attrgetter("fitness"))
 
-    print('count:', count,', Fitness Mínimo',best_fit.fitness)
+    print('count:', count,', Fitness ',best_fit.fitness)
 
-    if best_fit.fitness==0:
+    if pop.optim =='min' and best_fit.fitness==0:
+        print(np.abs(best_fit.solution))
+        print('count:', count)
+        flag_sucesso = True
+    elif pop.optim =='max' and best_fit.fitness==243:
         print(np.abs(best_fit.solution))
         print('count:', count)
         flag_sucesso = True
