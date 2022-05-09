@@ -1,5 +1,5 @@
 from Sudoku.data_sudoku import grid
-from Sudoku.functions_2 import get_neighbour, fitness
+from Sudoku.functions import get_neighbour, fitness
 from charles.charles import Population, Individual
 from charles.GA import GA
 from operator import attrgetter
@@ -12,7 +12,7 @@ sudoku_grid = grid
 Individual.fitness = fitness
 Individual.get_neighbours = get_neighbour
 
-pop_size = 500
+pop_size = 1000
 
 #initial population
 pop = Population(
@@ -38,7 +38,7 @@ while flag_sucesso == False:
     
     #loop até a off_pop tiver o tamanho da parent pop
     while len(off_pop) < pop_size:
-        off_pop.individuals.extend(GA(pop))
+        off_pop.individuals.extend(GA(pop, 0.5, 0.07))
     
     #a população de offspring vira a nova parent population
     pop = off_pop
@@ -46,7 +46,7 @@ while flag_sucesso == False:
     #pega o indivíduo com o menor valor de fitness
     best_fit = min(pop, key=attrgetter("fitness"))
 
-    #print('count:', count,', Fitness Mínimo',best_fit.fitness)
+    print('count:', count,', Fitness Mínimo',best_fit.fitness)
 
     if best_fit.fitness==0:
         print(np.abs(best_fit.solution))

@@ -1,13 +1,13 @@
 from random import choice,random
 from charles.crossover import co_singlepoint
 from charles.mutation import mutation,swap_mutation
-from charles.selection import tournament,roulette
+from charles.selection import tournament #,roulette
 from charles.charles import Individual
 
-def GA(P):
+def GA(P,p_cross, p_mu):
     #inicializa uma probabilidade 
-    p=0.1
-    p_mu = 0.5
+    p= p_cross
+    p_mu = p_mu
     #selection
     first_sel = tournament(P)
     second_sel = tournament(P)

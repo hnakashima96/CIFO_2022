@@ -1,17 +1,24 @@
 from random import uniform,choice
 from operator import attrgetter
 
-def roulette(population):
-    
-    total_fitness = sum([i.fitness for i in population])
-    spin = uniform(0, total_fitness)
-    position = 0
-    for individual in population:
-        position += individual.fitness
-        if position > spin:
-            return individual
+### CREATE A ROULETTE WHEEL
 
-def tournament(population, size=5):
+# def roulette(population):
+#
+#     total_fitness = sum([i.fitness for i in population])
+#     spin = uniform(0, total_fitness)
+#     position = 0
+#     for individual in population:
+#         position += individual.fitness
+#         if position > spin:
+#             return individual
+
+
+### CREATE RANKING SELECTION
+
+#def rank
+
+def tournament(population, size=100):
     """Tournament selection implementation.
 
     Args:

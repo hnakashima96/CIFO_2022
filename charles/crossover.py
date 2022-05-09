@@ -13,4 +13,5 @@ def co_singlepoint(p1, p2):
     p2.solution = offspring2
 
     return p1, p2
-    
+
+###CREATE CROSSOVER BETWEEN EXTREMES
