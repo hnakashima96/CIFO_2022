@@ -15,7 +15,7 @@ class Individual:
 
 
 class Population:
-    def __init__(self, size, optim, grid,**kwargs):
+    def __init__(self, size, optim, grid, **kwargs):
         self.individuals = []
         self.size = size #tamanho da população
         self.optim = optim #tipo de problema
