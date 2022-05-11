@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 from random import uniform,choice
 from operator import attrgetter
 import numpy as np
@@ -39,10 +40,64 @@ def roulette(population):
     problem /= problem.sum()
 
     choice = np.random.choice(population, p=problem)
+=======
+# import random
+# from Sudoku.data_sudoku import grid
+# from Sudoku.functions_2 import get_neighbour, fitness
+# from charles import Population, Individual
+import numpy as np
+
+# sudoku_grid = grid
+#
+# # define monkey patch of the charles functions
+# Individual.fitness = fitness
+# Individual.get_neighbours = get_neighbour
+#
+# #fazer o loop para conseguir chegar a fitness igual a zero
+#
+# size = 6
+# M = 4
+# teste = 1
+# #initial population
+# pop = Population(
+#             size=size,
+#             optim='min',
+#             grid=sudoku_grid
+#     )
+#
+# p_index = [2, 4, 5]
+#
+# print([pop.individuals[i].fitness for i in range(len(pop))])
+
+def roulette(p_index, P):
+    fitness_list = []
+    # definir o fitness de toda a população
+    for j in range(len(p_index)):
+        i = p_index[j]
+        fitness_list.append(P.individuals[i].fitness)
+    #print(fitness_list)
+    # identificar a soma do fitness da população
+    sum_fitness = sum(fitness_list)
+    #print(sum_fitness)
+
+    #probabilidade de um valor ser escolhido
+    pchosen = [(fit/sum_fitness) for fit in fitness_list]
+    #print(pchosen)
+
+    #minimization problem
+    min_problem = 1 - np.array(pchosen)
+    #print('antes',min_problem)
+    min_problem /= min_problem.sum()
+    #print('depois',min_problem, sum(min_problem))
+
+    #escolher um valor
+    choice = np.random.choice(p_index, p=min_problem)
+>>>>>>> Stashed changes
 
     return choice
 
 
+<<<<<<< Updated upstream
 ### CREATE RANKING SELECTION
 def rank(population):
 
@@ -84,3 +139,8 @@ def tournament(population, size=100):
         raise Exception("No optimization specified (min or max).")
 
 #Ranking selection
+=======
+
+# print(roulette(p_index, pop))
+# https://stackoverflow.com/questions/8760473/roulette-wheel-selection-for-function-minimization
+>>>>>>> Stashed changes
