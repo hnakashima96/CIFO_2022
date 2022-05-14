@@ -2,13 +2,13 @@ from random import uniform,choice
 from operator import attrgetter
 import numpy as np
 from Sudoku.data_sudoku import grid
-from Sudoku.functions import get_neighbour, fitness
+from Sudoku.functions import get_neighbour, fitness_min
 from charles.charles import Population, Individual
 
 sudoku_grid = grid
 
 # define monkey patch of the charles functions
-Individual.fitness = fitness
+Individual.fitness = fitness_min
 Individual.get_neighbours = get_neighbour
 
 pop_size = 10
@@ -44,7 +44,22 @@ def roulette(population):
 
 
 ### CREATE RANKING SELECTION
-#def rank(population):
+def rank(population):
+
+    if population.optim == 'min':
+        sort_all_fitness = [population.individuals[ind].fitness for ind in range(len(population))]
+        sort_all_fitness.sort(reverse=True)
+    elif population.optim == 'max':
+        sort_all_fitness = [population.individuals[ind].fitness for ind in range(len(population))]
+        sort_all_fitness.sort(reverse=False)
+
+    individual_prob = np.array([ind/len(population) for ind in range(len(population))])
+
+    individual_prob /= individual_prob.sum()
+
+    choice = np.random.choice(population, p=individual_prob)
+
+    return choice
 
 
 def tournament(population, size=100):
