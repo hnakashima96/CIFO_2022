@@ -99,8 +99,6 @@ def fitness_min(prob_sol):
 
 def fitness_max(prob_sol):
 
-    #coloca todos os valores do sudoko como positivo para fazer avaliação de duplicados
-    #sem isso, o mesmo número no sudoko, mas negativo, não seria considerado duplicado
     prob_sol = np.abs(prob_sol)
 
     #inicializa o fit
@@ -108,11 +106,7 @@ def fitness_max(prob_sol):
 
     #conta duplicados de cada linha
     for i in range(9):
-        #a função unique gera um array com os valores unicos e outro com o count desses valores no array avaliado
-        #exemplo: input:[1,1,3,4,5], output: [1,3,4,5] e [2,1,1,1]
         unique = np.unique(prob_sol[:,i]) 
-
-        #soma o count maiores que 1
         total_fit += len(unique)
     
     #conta duplicados de cada coluna
