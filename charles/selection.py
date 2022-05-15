@@ -62,7 +62,7 @@ def rank(population):
     return choice
 
 
-def tournament(population, size=100):
+def tournament(population, size=5):
     """Tournament selection implementation.
 
     Args:
@@ -82,5 +82,3 @@ def tournament(population, size=100):
         return min(tournament, key=attrgetter("fitness"))
     else:
         raise Exception("No optimization specified (min or max).")
-
-#Ranking selection
