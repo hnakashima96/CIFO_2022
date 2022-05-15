@@ -2,6 +2,7 @@ import numpy as np
 import random
 
 
+
 #classe para identificar se o valor existe em linha, coluna ou quadrado 3x3
 class evaluation(object):
 
@@ -77,23 +78,18 @@ def fitness_min(prob_sol):
     for i in range(9):
         #a função unique gera um array com os valores unicos e outro com o count desses valores no array avaliado
         #exemplo: input:[1,1,3,4,5], output: [1,3,4,5] e [2,1,1,1]
-        unique, counts = np.unique(prob_sol[:,i], return_counts=True) 
-
-        #soma o count maiores que 1
-        total_fit += sum(np.where(counts>1,counts-1,0))
-    
-    #conta duplicados de cada coluna
-    for i in range(9):
-        unique, counts = np.unique(prob_sol[i,:], return_counts=True)
-        total_fit += sum(np.where(counts>1,counts-1,0))
+        counts_row = np.unique(prob_sol[:,i], return_counts=True)[1] 
+        counts_column = np.unique(prob_sol[i,:], return_counts=True)[1]
+        
+        total_fit += sum(counts_row-1) + sum(counts_column-1)
 
     #divide o sudoko em uma lista de sub-matrizes
     sub_matrix = split(prob_sol,3,3)
 
     #avalia duplicados em cada sub-matriz
     for i in sub_matrix:
-        unique, counts = np.unique(i, return_counts=True)
-        total_fit += sum(np.where(counts>1,counts-1,0))
+        counts = np.unique(i, return_counts=True)[1]
+        total_fit += sum(counts-1)
 
     return total_fit
 
@@ -104,15 +100,8 @@ def fitness_max(prob_sol):
     #inicializa o fit
     total_fit = 0
 
-    #conta duplicados de cada linha
     for i in range(9):
-        unique = np.unique(prob_sol[:,i]) 
-        total_fit += len(unique)
-    
-    #conta duplicados de cada coluna
-    for i in range(9):
-        unique = np.unique(prob_sol[i,:])
-        total_fit += len(unique)
+        total_fit += len(set(prob_sol[:,i])) + len(set(prob_sol[i,:]))
 
     #divide o sudoko em uma lista de sub-matrizes
     sub_matrix = split(prob_sol,3,3)
@@ -123,3 +112,5 @@ def fitness_max(prob_sol):
         total_fit += len(unique)
 
     return total_fit
+
+

@@ -1,3 +1,8 @@
+from scipy.spatial.distance import hamming
+from statistics import mean
+import numpy as np
+
+
 class Individual:
     def __init__(self, grid):
         self.grid = grid
@@ -24,6 +29,24 @@ class Population:
             self.individuals.append(
                 Individual(grid = self.grid)
             )
+
+    def variance(self):
+        distances = []
+        pop = self.individuals
+        for i in range(len(pop)):
+            distances.append(hamming(pop[0].solution.flatten(),pop[i].solution.flatten()))
+        
+        n = len(distances)
+        x = mean(distances)
+
+        dmax = max(distances)
+        dmin = min(distances)
+
+        normalized_distances = np.array([(x - dmin) / (dmax - dmin) for x in distances])
+        normalized_distances = np.nan_to_num(normalized_distances)
+        
+        return round(1/(n-1) * (sum(normalized_distances-x))**2)
+
 
     def __len__(self):
         return len(self.individuals)
