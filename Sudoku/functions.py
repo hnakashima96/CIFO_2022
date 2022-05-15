@@ -103,6 +103,7 @@ def fitness_max(prob_sol):
     for i in range(9):
         total_fit += len(set(prob_sol[:,i])) + len(set(prob_sol[i,:]))
 
+
     #divide o sudoko em uma lista de sub-matrizes
     sub_matrix = split(prob_sol,3,3)
 

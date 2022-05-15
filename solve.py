@@ -10,6 +10,7 @@ import timeit
 
 sudoku_grid = grid
 optimization = 'min'
+
 pop_size = 1000
 
 # define monkey patch of the charles functions
@@ -47,8 +48,10 @@ while flag_sucesso == False:
     
     #loop até a off_pop tiver o tamanho da parent pop
     while len(off_pop) < pop_size:
+
         off_pop.individuals.extend(GA(pop, 0.95, 0.01))
         
+
     
     #a população de offspring vira a nova parent population
     pop = off_pop
@@ -66,7 +69,9 @@ while flag_sucesso == False:
         flag_sucesso = True
 
     count += 1
+
     print('count:', count,', Fitness: ',best_fit.fitness,',Diversity: ',pop.variance())
+
 
 stop = timeit.default_timer()
 
