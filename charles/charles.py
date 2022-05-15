@@ -6,6 +6,7 @@ import numpy as np
 class Individual:
     def __init__(self, grid):
         self.grid = grid
+        self.sharing_fitness = 0
         self.solution = Individual.get_neighbours(self.grid)
         self.fitness = Individual.fitness(self.solution)
 
@@ -29,10 +30,28 @@ class Population:
             self.individuals.append(
                 Individual(grid = self.grid)
             )
+    
+    # def add_individuals(self,inds):
+
+    #     self.individuals.extend(inds)
+
+    #     var = self.variance()
+
+    #     if self.optim == 'max':
+    #         for i in self.individuals:
+    #             i.fitness = i.fitness / (1-var)
+    #     else:
+    #         for i in self.individuals:
+    #             #print(i.fitness)
+    #             i.fitness = i.fitness / var
+
+        
+    #     return 1
 
     def variance(self):
         distances = []
         pop = self.individuals
+        
         for i in range(len(pop)):
             distances.append(hamming(pop[0].solution.flatten(),pop[i].solution.flatten()))
         
@@ -44,10 +63,10 @@ class Population:
 
         normalized_distances = np.array([(x - dmin) / (dmax - dmin) for x in distances])
         normalized_distances = np.nan_to_num(normalized_distances)
-        
+
         return round(1/(n-1) * (sum(normalized_distances-x))**2)
 
-
+    
     def __len__(self):
         return len(self.individuals)
 
