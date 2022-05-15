@@ -1,3 +1,5 @@
+from audioop import avg
+from statistics import mean
 from Sudoku.data_sudoku import grid
 from Sudoku.functions import get_neighbour, fitness_max,fitness_min
 from charles.charles import Population, Individual
@@ -8,6 +10,9 @@ import timeit
 
 sudoku_grid = grid
 optimization = 'min'
+
+pop_size = 1000
+
 # define monkey patch of the charles functions
 if optimization == 'min':
     Individual.fitness = fitness_min
@@ -15,8 +20,6 @@ else:
     Individual.fitness = fitness_max
 
 Individual.get_neighbours = get_neighbour
-
-pop_size = 1000
 
 #initial population
 pop = Population(
@@ -28,7 +31,10 @@ pop = Population(
 #valida se nenhum dos individuos inicializados já é a solução final
 solution = 0
 flag_sucesso = False
-if min(pop, key=attrgetter("fitness")).fitness == 0:
+if pop.optim =='min' and min(pop, key=attrgetter("fitness")).fitness == 0:
+    flag_sucesso = True
+    solution = min(pop, key=attrgetter("fitness"))
+elif pop.optim =='max' and min(pop, key=attrgetter("fitness")).fitness==243:
     flag_sucesso = True
     solution = min(pop, key=attrgetter("fitness"))
 
@@ -42,7 +48,10 @@ while flag_sucesso == False:
     
     #loop até a off_pop tiver o tamanho da parent pop
     while len(off_pop) < pop_size:
-        off_pop.individuals.extend(GA(pop, 0.1, 0.5))
+
+        off_pop.individuals.extend(GA(pop, 0.95, 0.01))
+        
+
     
     #a população de offspring vira a nova parent population
     pop = off_pop
@@ -60,8 +69,15 @@ while flag_sucesso == False:
         flag_sucesso = True
 
     count += 1
-    print('count:', count,', Fitness ',best_fit.fitness)
+
+    print('count:', count,', Fitness: ',best_fit.fitness,',Diversity: ',pop.variance())
+
 
 stop = timeit.default_timer()
 
 print('Time: ', stop - start,'s')  
+
+# cycle cross over pg 86
+# partily matched cross over
+# diversity measure
+# fitness sharing pg75

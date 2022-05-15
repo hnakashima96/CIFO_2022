@@ -1,5 +1,5 @@
 from random import choice,random
-from charles.crossover import co_singlepoint
+from charles.crossover import co_singlepoint,cross_extrems,co_singlepoint_linear_inversion,cycle_co
 from charles.mutation import mutation,swap_mutation
 from charles.selection import tournament #,roulette
 from charles.charles import Individual
@@ -15,7 +15,7 @@ def GA(P,p_cross, p_mu):
     #randomly choose to do crossover or reproduce
     if random() < p:
         #apply crossover (1 point) in population
-        offspring1, offspring2 = co_singlepoint(first_sel, second_sel)
+        offspring1, offspring2 = cycle_co(first_sel, second_sel)
     else:
         offspring1, offspring2 = first_sel, second_sel
 
