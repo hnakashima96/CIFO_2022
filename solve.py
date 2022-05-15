@@ -1,23 +1,27 @@
 from Sudoku.data_sudoku import grid
-from Sudoku.functions import get_neighbour, fitness_max
+from Sudoku.functions import get_neighbour, fitness_max, fitness_min
 from charles.charles import Population, Individual
 from charles.GA import GA
 from operator import attrgetter
 import numpy as np
 import timeit
+from charles.mutation import mutation,swap_mutation
+from charles.selection import tournament, roulette, rank
 
 sudoku_grid = grid
 
 # define monkey patch of the charles functions
-Individual.fitness = fitness_max
+Individual.fitness = fitness_min
 Individual.get_neighbours = get_neighbour
 
 pop_size = 1000
+optim_problem = 'min'
+
 
 #initial population
 pop = Population(
             size=pop_size,
-            optim='max',
+            optim=optim_problem,
             grid=sudoku_grid
         )
 
@@ -34,11 +38,11 @@ start = timeit.default_timer()
 while flag_sucesso == False:
     
     #inicializa a nova população de offspring
-    off_pop = Population(0,'max',grid)
+    off_pop = Population(0,optim_problem,grid)
     
     #loop até a off_pop tiver o tamanho da parent pop
     while len(off_pop) < pop_size:
-        off_pop.individuals.extend(GA(pop, 0.5, 0.07))
+        off_pop.individuals.extend(GA(pop, 0.1, 0.5, selection_choice=tournament,mutation_choice=swap_mutation))
     
     #a população de offspring vira a nova parent population
     pop = off_pop
