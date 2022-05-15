@@ -18,8 +18,8 @@ pop_size = 1000
 
 #GA parameters decision
 
-co_percent = 0.95
-mut_percent = 0.01
+co_percent = 0.90
+mut_percent = 0.05
 selec_option = tournament
 co_option = pmx
 mut_option1 = swap_mutation
