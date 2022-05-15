@@ -3,6 +3,9 @@ from statistics import mean
 from Sudoku.data_sudoku import grid
 from Sudoku.functions import get_neighbour, fitness_max,fitness_min
 from charles.charles import Population, Individual
+from charles.crossover import co_singlepoint,cross_extrems,co_singlepoint_linear_inversion,cycle_co, pmx
+from charles.mutation import mutation,swap_mutation
+from charles.selection import tournament
 from charles.GA import GA
 from operator import attrgetter
 import numpy as np
@@ -12,6 +15,17 @@ sudoku_grid = grid
 optimization = 'min'
 
 pop_size = 1000
+
+#GA parameters decision
+
+co_percent = 0.90
+mut_percent = 0.05
+selec_option = tournament
+co_option = pmx
+mut_option1 = swap_mutation
+mut_option2 = swap_mutation
+elitism = True
+
 
 # define monkey patch of the charles functions
 if optimization == 'min':
@@ -49,7 +63,7 @@ while flag_sucesso == False:
     #loop até a off_pop tiver o tamanho da parent pop
     while len(off_pop) < pop_size:
 
-        off_pop.individuals.extend(GA(pop, 0.95, 0.1))
+        off_pop.individuals.extend(GA(pop, co_percent, mut_percent,selec_option, co_option, mut_option1, mut_option2, elitism))
     
     #a população de offspring vira a nova parent population
     pop = off_pop
@@ -68,7 +82,7 @@ while flag_sucesso == False:
 
     count += 1
 
-    print('count:', count,',\nFitness: \n',best_fit,',Diversity: ',pop.variance())
+    print('count:', count,', Fitness: ',best_fit.fitness,',Diversity: ',pop.variance())
 
 
 stop = timeit.default_timer()
@@ -79,4 +93,3 @@ print('Time: ', stop - start,'s')
 # partily matched cross over
 # diversity measure
 # fitness sharing pg75
-
