@@ -14,26 +14,101 @@ def co_singlepoint(p1, p2):
 
     return p1, p2
 
+### PARALLEL MAPPED CROSSOVER
+
+def pmx(p1,p2):
+
+    rows = random.sample(range(9), random.randint(1, 9))
+
+    for k in rows:
+        genes1 = p1.solution[k, :]
+        genes1 = np.extract(genes1 < 0, genes1)
+
+        genes2 = p2.solution[k, :]
+        genes2 = np.extract(genes2 < 0, genes2)
+
+        #https://github.com/SCK22/GeneticAlgorithmTSP/blob/master/GeneticAlgoLibrary.py
+        indexes_for_crossover = random.sample((range(len(genes1))), 2)
+        co_start_point, co_end_point = (min(indexes_for_crossover), max(indexes_for_crossover))
+
+
+        ## generate child 1
+        child1 = np.hstack((genes1[0:co_start_point],
+                           genes2[co_start_point:co_end_point],
+                           genes1[co_end_point:]))
+        ## generate child 2
+        child2 = np.hstack((genes2[0:co_start_point],
+                            genes1[co_start_point:co_end_point],
+                            genes2[co_end_point:]))
+
+        ## Create mappings
+        #identify the respective index of numbers between arrays
+        mapping = list(zip(
+                genes1[co_start_point:co_end_point],
+                genes2[co_start_point:co_end_point]))
+
+        # run until all the nodes in the route are unique
+        while len(np.unique(child1)) != len(child1):
+            child1_part = np.hstack((child1[:co_start_point],
+                                    child1[co_end_point:]))
+            for i in range(len(child1_part)):
+                for j in mapping:
+                    if child1_part[i] == j[1]:
+                        child1_part[i] = j[0]
+
+            child1 = np.hstack((child1_part[:co_start_point],
+                               child1[co_start_point:co_end_point],
+                               child1_part[co_start_point:]))
+
+        while len(np.unique(child2)) != len(child2):
+            child2_part = np.hstack((child2[:co_start_point],
+                                     child2[co_end_point:]))
+
+            for i in range(len(child2_part)):
+                for j in mapping:
+                    if child2_part[i] == j[0]:
+                        child2_part[i] = j[1]
+
+            child2 = np.hstack((child2_part[:co_start_point],
+                                child2[co_start_point:co_end_point],
+                                child2_part[co_start_point:]))
+
+    np.place(p1.solution[k, :], p1.solution[k, :] < 0, child1)
+    np.place(p2.solution[k, :], p2.solution[k, :] < 0, child2)
+
+
+    return p1, p2
+
+
+
 ###CREATE CROSSOVER BETWEEN EXTREMES
 def cross_extrems(p1, p2):
     
     rows = random.sample(range(9),random.randint(1,9))
-    
+
     for i in rows:
         genes1 = p1.solution[i,:]
+        print('genes1',genes1)
         genes1 = np.extract(genes1<0,genes1)
+        print('genes1', genes1)
 
         genes2 = p2.solution[i,:]
         genes2 = np.extract(genes2<0,genes2)
 
         genes1[0], genes1[-1] = genes2[-1], genes2[0]
 
+        print(set(genes1))
+
         while len(set(genes1)) < len(genes1):
            genes1[0] = genes1[random.randint(1,len(genes1))] 
            genes1[0], genes1[-1] = genes2[-1], genes2[0]
 
+        print(genes1)
+
         np.place(p1.solution[i,:],p1.solution[i,:]<0,genes2)
         np.place(p2.solution[i,:],p2.solution[i,:]<0,genes1)
+
+    print(p1)
 
     return p1, p2
 
@@ -49,17 +124,21 @@ def cycle_co(p1, p2):
     """
 
     rows = random.sample(range(9),random.randint(1,9))
-    
+
     for row in rows:
         row = random.randint(0,8)
+        # print('row',row)
         genes1 = p1.solution[row,:]
+        # print('genes1',genes1)
         genes1 = list(np.extract(genes1<0,genes1))
+        # print('genes1',genes1)
 
         genes2 = p2.solution[row,:]
         genes2 = list(np.extract(genes2<0,genes2))
 
         # Offspring placeholders - None values make it easy to debug for errors
         offspring1 = [None] * len(genes1)
+        # print('off1',offspring1)
         offspring2 = [None] * len(genes1)
         # While there are still None values in offspring, get the first index of
         # None and start a "cycle" according to the cycle crossover method
@@ -83,6 +162,8 @@ def cycle_co(p1, p2):
             
         np.place(p1.solution[row,:],p1.solution[row,:]<0,offspring1)
         np.place(p2.solution[row,:],p2.solution[row,:]<0,offspring2)
+
+        # print(p1)
 
     return p1, p2
 
