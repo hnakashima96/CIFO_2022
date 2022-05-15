@@ -1,7 +1,7 @@
 from random import choice,random
-from charles.crossover import co_singlepoint,cross_extrems,co_singlepoint_linear_inversion,cycle_co
+from charles.crossover import co_singlepoint,cross_extrems,cycle_co
 from charles.mutation import mutation,swap_mutation
-from charles.selection import tournament #,roulette
+from charles.selection import tournament,tournament2,rank ,roulette
 from charles.charles import Individual
 
 def GA(P,p_cross, p_mu):
@@ -26,3 +26,4 @@ def GA(P,p_cross, p_mu):
         offspring2 = mutation(offspring2)
     
     return [Individual(offspring1.solution), Individual(offspring2.solution)]
+    #return Individual(offspring1.solution)

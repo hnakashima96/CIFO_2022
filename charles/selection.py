@@ -1,27 +1,8 @@
-from random import uniform,choice
+from random import uniform,choice,sample
 from operator import attrgetter
 import numpy as np
-from Sudoku.data_sudoku import grid
-from Sudoku.functions import get_neighbour, fitness_min
-from charles.charles import Population, Individual
 
-sudoku_grid = grid
-
-# define monkey patch of the charles functions
-Individual.fitness = fitness_min
-Individual.get_neighbours = get_neighbour
-
-pop_size = 10
-
-#initial population
-pop = Population(
-            size=pop_size,
-            optim='min',
-            grid=sudoku_grid
-        )
-
-print(pop)
-
+from Sudoku.functions import sharring_coef
 
 ### CREATE A ROULETTE WHEEL
 def roulette(population):
@@ -74,11 +55,40 @@ def tournament(population, size=5):
     """
 
     # Select individuals based on tournament size
-    tournament = [choice(population.individuals) for i in range(size)]
+    tournament = sample(population.individuals,size) 
     # Check if the problem is max or min
     if population.optim == 'max':
         return max(tournament, key=attrgetter("fitness"))
     elif population.optim == 'min':
         return min(tournament, key=attrgetter("fitness"))
+    else:
+        raise Exception("No optimization specified (min or max).")
+
+
+
+def tournament2(population, size=5):
+    """Tournament selection implementation.
+
+    Args:
+        population (Population): The population we want to select from.
+        size (int): Size of the tournament.
+
+    Returns:
+        Individual: Best individual in the tournament.
+    """
+ 
+    # Select individuals based on tournament size
+    tournament_indexs = sample(range(len(population)),size) 
+
+    for i in tournament_indexs:
+        population[i].sharing_fitness = population[i].fitness / sharring_coef(i,population)
+
+    tournament = [population[i] for i in tournament_indexs] 
+    
+    # Check if the problem is max or min
+    if population.optim == 'max':
+        return max(tournament, key=attrgetter("sharing_fitness"))
+    elif population.optim == 'min':
+        return min(tournament, key=attrgetter("sharing_fitness"))
     else:
         raise Exception("No optimization specified (min or max).")

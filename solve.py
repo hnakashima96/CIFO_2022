@@ -49,9 +49,7 @@ while flag_sucesso == False:
     #loop até a off_pop tiver o tamanho da parent pop
     while len(off_pop) < pop_size:
 
-        off_pop.individuals.extend(GA(pop, 0.95, 0.01))
-        
-
+        off_pop.individuals.extend(GA(pop, 0.95, 0.1))
     
     #a população de offspring vira a nova parent population
     pop = off_pop
@@ -70,7 +68,7 @@ while flag_sucesso == False:
 
     count += 1
 
-    print('count:', count,', Fitness: ',best_fit.fitness,',Diversity: ',pop.variance())
+    print('count:', count,',\nFitness: \n',best_fit,',Diversity: ',pop.variance())
 
 
 stop = timeit.default_timer()
@@ -81,3 +79,4 @@ print('Time: ', stop - start,'s')
 # partily matched cross over
 # diversity measure
 # fitness sharing pg75
+
