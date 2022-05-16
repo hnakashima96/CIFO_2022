@@ -3,29 +3,30 @@ from statistics import mean
 from Sudoku.data_sudoku import grid
 from Sudoku.functions import get_neighbour, fitness_max,fitness_min
 from charles.charles import Population, Individual
-from charles.crossover import co_singlepoint,cross_extrems,co_singlepoint_linear_inversion,cycle_co, pmx
+from charles.crossover import co_singlepoint,cross_extrems,cycle_co, pmx
 from charles.mutation import mutation,swap_mutation
-from charles.selection import tournament
+from charles.selection import tournament, tournament2
 from charles.GA import GA
 from operator import attrgetter
 import numpy as np
 import timeit
 
 sudoku_grid = grid
-optimization = 'min'
+optimization = 'max'
 
-pop_size = 1000
+pop_size = 5000
 
 #GA parameters decision
 
-co_percent = 0.90
-mut_percent = 0.05
+co_percent = 0.97
+mut_percent = 0.01
 selec_option = tournament
 co_option = pmx
-mut_option1 = swap_mutation
+mut_option1 = mutation
 mut_option2 = swap_mutation
-elitism = True
 
+#Quer elitismo? Identificar a porcentagem
+elitism = 0
 
 # define monkey patch of the charles functions
 if optimization == 'min':
@@ -56,25 +57,113 @@ elif pop.optim =='max' and min(pop, key=attrgetter("fitness")).fitness==243:
 count = 0
 start = timeit.default_timer()
 while flag_sucesso == False:
-    
-    #inicializa a nova população de offspring
-    off_pop = Population(0,optimization,grid)
-    
-    #loop até a off_pop tiver o tamanho da parent pop
-    while len(off_pop) < pop_size:
 
-        off_pop.individuals.extend(GA(pop, co_percent, mut_percent,selec_option, co_option, mut_option1, mut_option2, elitism))
-    
-    #a população de offspring vira a nova parent population
-    pop = off_pop
+    if pop.optim == 'min':
+        if elitism == 0:
+            #inicializa a nova população de offspring
+            off_pop = Population(0,optimization,grid)
 
-    #pega o indivíduo com o menor valor de fitness
-    best_fit = min(pop, key=attrgetter("fitness"))
+            #loop até a off_pop tiver o tamanho da parent pop
+            while len(off_pop) < pop_size:
+
+                off_pop.individuals.extend(GA(pop, co_percent, mut_percent,selec_option, co_option, mut_option1, mut_option2))
+
+            #a população de offspring vira a nova parent population
+            pop = off_pop
+
+            #pega o indivíduo com o menor valor de fitness
+            best_fit = min(pop, key=attrgetter("fitness"))
+
+        elif elitism > 0:
+            # Armazenar a porcentagens de novos indivíduos
+            eli_percent = int(pop_size*elitism)
+            offspring_percent = int(pop_size*(1-elitism))
+
+            #Criar população de elite
+            eli_pop_sort = sorted(pop.individuals, key=lambda x:x.fitness)
+            eli_pop = []
+
+            for elite in eli_pop_sort:
+                while len(eli_pop) < eli_percent:
+                    eli_pop.append(elite)
+
+            # inicializa a nova população de offspring
+            off_pop = Population(0, optimization, grid)
+
+            print('check-in 2',len(off_pop))
+            # loop até a off_pop tiver o tamanho da parent pop
+            while len(off_pop) < offspring_percent:
+                off_pop.individuals.extend(
+                    GA(pop, co_percent, mut_percent, selec_option, co_option, mut_option1, mut_option2))
+
+            print('check-in 3',len(off_pop))
+            # a população de offspring vira a nova parent population
+            for elite in eli_pop:
+                off_pop.individuals.append(elite)
+
+            pop = off_pop
+
+            print('check-in', len(pop))
+
+            # pega o indivíduo com o menor valor de fitness
+            best_fit = min(pop, key=attrgetter("fitness"))
+
+    elif pop.optim == 'max':
+        if elitism == 0:
+            # inicializa a nova população de offspring
+            off_pop = Population(0, optimization, grid)
+
+            # loop até a off_pop tiver o tamanho da parent pop
+            while len(off_pop) < pop_size:
+                off_pop.individuals.extend(
+                    GA(pop, co_percent, mut_percent, selec_option, co_option, mut_option1, mut_option2))
+
+            # a população de offspring vira a nova parent population
+            pop = off_pop
+
+            # pega o indivíduo com o menor valor de fitness
+            best_fit = max(pop, key=attrgetter("fitness"))
+
+        elif elitism > 0:
+            # Armazenar a porcentagens de novos indivíduos
+            eli_percent = int(pop_size * elitism)
+            offspring_percent = int(pop_size * (1 - elitism))
+
+            # Criar população de elite
+            eli_pop_sort = sorted(pop.individuals, key=lambda x: x.fitness)
+            eli_pop = []
+
+            for elite in eli_pop_sort:
+                while len(eli_pop) < eli_percent:
+                    eli_pop.append(elite)
+
+            # inicializa a nova população de offspring
+            off_pop = Population(0, optimization, grid)
+
+            print('check-in 2', len(off_pop))
+            # loop até a off_pop tiver o tamanho da parent pop
+            while len(off_pop) < offspring_percent:
+                off_pop.individuals.extend(
+                    GA(pop, co_percent, mut_percent, selec_option, co_option, mut_option1, mut_option2))
+
+            print('check-in 3', len(off_pop))
+            # a população de offspring vira a nova parent population
+            for elite in eli_pop:
+                off_pop.individuals.append(elite)
+
+            pop = off_pop
+
+            print('check-in', len(pop))
+
+            # pega o indivíduo com o menor valor de fitness
+            best_fit = max(pop, key=attrgetter("fitness"))
+
 
     if pop.optim =='min' and best_fit.fitness==0:
         print(np.abs(best_fit.solution))
         print('count:', count)
         flag_sucesso = True
+
     elif pop.optim =='max' and best_fit.fitness==243:
         print(np.abs(best_fit.solution))
         print('count:', count)
