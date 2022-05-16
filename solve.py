@@ -63,8 +63,7 @@ while flag_sucesso == False:
     #loop até a off_pop tiver o tamanho da parent pop
     while len(off_pop) < pop_size:
 
-        off_pop.individuals.extend(GA(pop, co_percent, mut_percent,selec_option,
-                                      co_option, mut_option1, mut_option2, elitism))
+        off_pop.individuals.extend(GA(pop, co_percent, mut_percent,selec_option, co_option, mut_option1, mut_option2, elitism))
     
     #a população de offspring vira a nova parent population
     pop = off_pop
