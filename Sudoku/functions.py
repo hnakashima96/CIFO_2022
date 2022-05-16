@@ -1,8 +1,6 @@
 import numpy as np
 import random
 
-
-
 #classe para identificar se o valor existe em linha, coluna ou quadrado 3x3
 class evaluation(object):
 
