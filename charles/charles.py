@@ -9,12 +9,16 @@ class Individual:
         self.sharing_fitness = 0
         self.solution = Individual.get_neighbours(self.grid)
         self.fitness = Individual.fitness(self.solution)
+        # self.sf = Individual.shared_fitness(self.solution)  # sharing fitness pontuation
 
     def fitness(self, prob_sol):
         raise Exception("You need to monkey patch the fitness path.")
 
     def get_neighbours(self, **kwargs):
         raise Exception("You need to monkey patch the neighbourhood function.")
+
+    # def shared_fitness(self, **kwargs):
+    #     raise Exception("You need to monkey patch the shared fitness function.")
 
     def __repr__(self):
         return f"Individual: (matrix={self.solution}); Fitness: {self.fitness}"

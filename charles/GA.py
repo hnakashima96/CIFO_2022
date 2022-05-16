@@ -1,10 +1,10 @@
 from random import choice,random
 from charles.crossover import co_singlepoint,cross_extrems,cycle_co
 from charles.mutation import mutation,swap_mutation
-from charles.selection import tournament,tournament2,rank ,roulette
+from charles.selection import tournament,tournament2,rank,roulette
 from charles.charles import Individual
 
-def GA(P,p_cross, p_mu, selec_option, co_option, mut_option1, mut_option2, elitism):
+def GA(P,p_cross, p_mu, selec_option, co_option, mut_option1, mut_option2):
     #inicializa uma probabilidade 
     p= p_cross
     p_mu = p_mu
@@ -28,20 +28,5 @@ def GA(P,p_cross, p_mu, selec_option, co_option, mut_option1, mut_option2, eliti
     final_offspring1 = Individual(offspring1.solution)
     final_offspring2 = Individual(offspring2.solution)
 
-    #apply elitism
-    if P.optim == 'min' and elitism == True:
-        if final_offspring1.fitness > first_sel.fitness:
-            final_offspring1 = first_sel
-
-        if final_offspring1.fitness > second_sel.fitness:
-            final_offspring2 = second_sel
-
-    if P.optim == 'max' and elitism == True:
-        if final_offspring1.fitness < first_sel.fitness:
-            final_offspring1 = first_sel
-
-        if final_offspring1.fitness < second_sel.fitness:
-            final_offspring2 = second_sel
-
-    return [Individual(offspring1.solution), Individual(offspring2.solution)]
+    return [final_offspring1, final_offspring2]
 

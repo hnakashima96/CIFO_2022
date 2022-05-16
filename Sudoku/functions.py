@@ -2,8 +2,6 @@ import numpy as np
 import random
 from scipy.spatial.distance import hamming
 
-
-
 #classe para identificar se o valor existe em linha, coluna ou quadrado 3x3
 class evaluation(object):
 
