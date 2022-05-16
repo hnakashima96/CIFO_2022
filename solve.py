@@ -5,16 +5,17 @@ from Sudoku.functions import get_neighbour, fitness_max,fitness_min
 from charles.charles import Population, Individual
 from charles.crossover import co_singlepoint,cross_extrems,cycle_co, pmx
 from charles.mutation import mutation,swap_mutation
-from charles.selection import tournament, tournament2
+from charles.selection import tournament, tournament2, roulette, rank
 from charles.GA import GA
 from operator import attrgetter
 import numpy as np
 import timeit
 
 sudoku_grid = grid
-optimization = 'max'
+optimization = 'min'
 
-pop_size = 5000
+#Population size definition
+pop_size = 10000
 
 #GA parameters decision
 
@@ -90,20 +91,16 @@ while flag_sucesso == False:
             # inicializa a nova população de offspring
             off_pop = Population(0, optimization, grid)
 
-            print('check-in 2',len(off_pop))
             # loop até a off_pop tiver o tamanho da parent pop
             while len(off_pop) < offspring_percent:
                 off_pop.individuals.extend(
                     GA(pop, co_percent, mut_percent, selec_option, co_option, mut_option1, mut_option2))
 
-            print('check-in 3',len(off_pop))
             # a população de offspring vira a nova parent population
             for elite in eli_pop:
                 off_pop.individuals.append(elite)
 
             pop = off_pop
-
-            print('check-in', len(pop))
 
             # pega o indivíduo com o menor valor de fitness
             best_fit = min(pop, key=attrgetter("fitness"))
@@ -140,20 +137,16 @@ while flag_sucesso == False:
             # inicializa a nova população de offspring
             off_pop = Population(0, optimization, grid)
 
-            print('check-in 2', len(off_pop))
             # loop até a off_pop tiver o tamanho da parent pop
             while len(off_pop) < offspring_percent:
                 off_pop.individuals.extend(
                     GA(pop, co_percent, mut_percent, selec_option, co_option, mut_option1, mut_option2))
 
-            print('check-in 3', len(off_pop))
             # a população de offspring vira a nova parent population
             for elite in eli_pop:
                 off_pop.individuals.append(elite)
 
             pop = off_pop
-
-            print('check-in', len(pop))
 
             # pega o indivíduo com o menor valor de fitness
             best_fit = max(pop, key=attrgetter("fitness"))
