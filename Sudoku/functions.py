@@ -1,5 +1,6 @@
 import numpy as np
 import random
+from scipy.spatial.distance import hamming
 
 
 
@@ -113,5 +114,24 @@ def fitness_max(prob_sol):
         total_fit += len(unique)
 
     return total_fit
+
+
+
+def sharring_coef(ind_index,pop):
+    
+    distances = []
+    
+    if pop.optim == 'max':
+        for i in range(len(pop)):
+            if i != ind_index:
+                distances.append(1-hamming(pop[ind_index].solution.flatten(),pop[i].solution.flatten()))
+
+        return sum(distances)
+    else:
+        for i in range(len(pop)):
+            if i != ind_index:
+                distances.append(hamming(pop[ind_index].solution.flatten(),pop[i].solution.flatten()))
+
+        return sum(distances)
 
 

@@ -1,7 +1,7 @@
 from random import choice,random
-from charles.crossover import co_singlepoint,cross_extrems,co_singlepoint_linear_inversion,cycle_co
+from charles.crossover import co_singlepoint,cross_extrems,cycle_co
 from charles.mutation import mutation,swap_mutation
-from charles.selection import tournament #,roulette
+from charles.selection import tournament,tournament2,rank ,roulette
 from charles.charles import Individual
 
 def GA(P,p_cross, p_mu, selec_option, co_option, mut_option1, mut_option2, elitism):
@@ -42,5 +42,6 @@ def GA(P,p_cross, p_mu, selec_option, co_option, mut_option1, mut_option2, eliti
 
         if final_offspring1.fitness < second_sel.fitness:
             final_offspring2 = second_sel
-    
-    return [final_offspring1,final_offspring2]
+
+    return [Individual(offspring1.solution), Individual(offspring2.solution)]
+

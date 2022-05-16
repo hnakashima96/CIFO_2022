@@ -123,11 +123,11 @@ def cycle_co(p1, p2):
         Individuals: Two offspring, resulting from the crossover.
     """
 
-    rows = random.sample(range(9),random.randint(1,9))
 
+    #rows = random.sample(range(9),random.randint(1,9))
+    rows = random.sample(range(9),5)
     for row in rows:
-        row = random.randint(0,8)
-        # print('row',row)
+
         genes1 = p1.solution[row,:]
         # print('genes1',genes1)
         genes1 = list(np.extract(genes1<0,genes1))
@@ -136,6 +136,8 @@ def cycle_co(p1, p2):
         genes2 = p2.solution[row,:]
         genes2 = list(np.extract(genes2<0,genes2))
 
+        if genes1==genes2:
+            genes1.reverse()
         # Offspring placeholders - None values make it easy to debug for errors
         offspring1 = [None] * len(genes1)
         # print('off1',offspring1)
@@ -167,46 +169,3 @@ def cycle_co(p1, p2):
 
     return p1, p2
 
-def co_singlepoint_linear_inversion(p1, p2):
-
-    rows = random.sample(range(9),random.randint(1,9))
-    
-    for i in rows:
-        genes1 = p1.solution[i,:]
-        genes1 = np.extract(genes1<0,genes1)
-    
-        genes2 = p2.solution[i,:]
-        genes2 = np.extract(genes2<0,genes2)
-        
-        #apply crossover (1 point)
-        
-        co_point = random.randint(1, len(genes1)-1)
-        print(genes1)
-        print(genes2)
-        x =  genes2[:co_point], genes1[co_point:] 
-        y =  genes1[:co_point], genes2[co_point:] 
-        print()
-        print(x)
-        print(y)
-        print()
-        genes1[co_point:],genes2[co_point:] = genes2[co_point:],genes1[co_point:]
-        print(genes1)
-        print(genes2)
-        print()
-        while len(set(genes1)) < len(genes1):
-            genes1[co_point:],genes2[co_point:] = genes2[co_point:],genes1[co_point:]
-            print(genes1)
-            print(genes2)
-            break
-            index = random.sample(range(len(genes1)),2)
-            print(genes1)
-            print(genes2)
-            genes1[index[0]],genes1[index[1]]  = genes1[index[1]],genes1[index[0]]
-
-            genes1[co_point:],genes2[co_point:] = genes2[co_point:],genes1[co_point:]
-        break
-        np.place(p1.solution[i,:],p1.solution[i,:]<0,genes1)
-        np.place(p2.solution[i,:],p2.solution[i,:]<0,genes2)
-  
-
-    return p1, p2
