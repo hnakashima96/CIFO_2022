@@ -1,7 +1,7 @@
 from audioop import avg
 from statistics import mean
 from Sudoku.data_sudoku import grid
-from Sudoku.functions import get_neighbour, fitness_max,fitness_min,get_neighbour2
+from Sudoku.functions import get_neighbour, fitness_max,fitness_min
 from charles.charles import Population, Individual
 from charles.crossover import co_singlepoint,cross_extrems,cycle_co, pmx
 from charles.mutation import mutation,swap_mutation
@@ -28,7 +28,7 @@ mut_option1 = swap_mutation
 mut_option2 = mutation
 
 #Quer elitismo? Identificar a porcentagem
-elitism = 0.2
+elitism = 0
 
 ##PRECISA CRIAR TABELA PERFORM?
 tabela_perform = 'nao'
