@@ -23,15 +23,15 @@ pop_size = 4000
 co_percent = 0.97
 mut_percent = 0.01
 selec_option = tournament
-co_option = pmx
+co_option = cycle_co
 mut_option1 = swap_mutation
 mut_option2 = mutation
 
 #Quer elitismo? Identificar a porcentagem
 elitism = 0
 
-##TESTEE NUMBER
-test_number = 1
+##PRECISA CRIAR TABELA PERFORM?
+tabela_perform = 'nao'
 
 # define monkey patch of the charles functions
 if optimization == 'min':
@@ -58,18 +58,24 @@ elif pop.optim =='max' and min(pop, key=attrgetter("fitness")).fitness==243:
     flag_sucesso = True
     solution = min(pop, key=attrgetter("fitness"))
 
+
 #criar tabela para resultado de performance
-create_table_perform()
+if tabela_perform == 'sim':
+    create_table_perform()
 
 #criar tabela para cada combinação
 create_table_analysis(selec_option,co_option)
 
 test_number = 0
-while test_number < 30:
+while test_number < 3:
     #fazer o loop para conseguir chegar a fitness igual a zero
     count = 0
+    flag_sucesso = False
     start = timeit.default_timer()
+    #laço para encontrar o fitness
     while flag_sucesso == False:
+        if count > 4:
+            break
 
         if pop.optim == 'min':
             if elitism == 0:
@@ -163,7 +169,6 @@ while test_number < 30:
                 # pega o indivíduo com o menor valor de fitness
                 best_fit = max(pop, key=attrgetter("fitness"))
 
-
         if pop.optim =='min' and best_fit.fitness==0:
             print(np.abs(best_fit.solution))
             print('count:', count)
@@ -180,17 +185,13 @@ while test_number < 30:
 
         print('count:', count,', Fitness: ',best_fit.fitness,',Diversity: ',pop.variance())
 
+    stop = timeit.default_timer()
+
+    insere_perform(selec_option, co_option, test_number, stop - start, pop_size, co_percent, mut_percent, mut_option2,
+                   mut_percent)
+
     test_number += 1
 
-stop = timeit.default_timer()
-
-insere_perform(selec_option,co_option,test_number, stop - start, pop_size, co_percent, mut_percent,mut_option2,mut_percent)
-
-print('Time: ', stop - start,'s')
+    print('Time: ', stop - start, 's')
 
 
-
-# cycle cross over pg 86
-# partily matched cross over
-# diversity measure
-# fitness sharing pg75
