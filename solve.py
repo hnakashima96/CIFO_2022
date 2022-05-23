@@ -11,22 +11,22 @@ import numpy as np
 import timeit
 
 sudoku_grid = grid
-optimization = 'min'
+optimization = 'max'
 
 #Population size definition
-pop_size = 10000
+pop_size = 2500
 
 #GA parameters decision
 co_percent = 0.97
 mut_percent = 0.01
-selec_option = rank#tournament
-co_option = cycle_co
+selec_option = rank
+co_option = co_singlepoint
 mut_option1 = swap_mutation
 mut_option2 = mutation
-elitism = 0.2
+elitism = 0
 
 ##PRECISA CRIAR TABELA PERFORM?
-tabela_perform = 'sim'
+tabela_perform = 'nao'
 
 #NÚMERO DA COMBINAÇÃO
 combinacao = 1
