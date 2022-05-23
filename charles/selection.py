@@ -1,4 +1,4 @@
-from random import uniform, choices, sample
+from random import uniform,choices,sample
 from operator import attrgetter
 
 from Sudoku.functions import sharring_coef
@@ -17,6 +17,7 @@ def roulette(population):
     position = 0
 
     if population.optim == 'min':
+
         sum_all_fitness = sum([1 / ind.fitness for ind in population])
         spin = uniform(0, sum_all_fitness)
         for ind in population:
@@ -24,7 +25,7 @@ def roulette(population):
             if position > spin:
                 return ind
 
-    elif population.optim == 'max':
+    elif population.optim == 'max':   
         sum_all_fitness = sum([ind.fitness for ind in population])
         spin = uniform(0, sum_all_fitness)
         for ind in population:
@@ -32,12 +33,11 @@ def roulette(population):
             if position > spin:
                 return ind
 
-
 ### CREATE RANKING SELECTION
 def rank(population):
     '''
-        The rank selection considered the probability of select an individual based in his position in the
-        rank of fitness. The rank is just a sorting of the individuals by fitness: higher the position of
+        The rank selection considered the probability of select an individual based in his position in the 
+        rank of fitness. The rank is just a sorting of the individuals by fitness: higher the position of 
         the individual in the list, higher the probability.
         The probability is obtain by the formula:
             individual index / AP(n)
@@ -55,9 +55,7 @@ def rank(population):
     # creat a list with the probability for each individual be selected
     individual_prob = [i / index_sum for i in range(1, max_index + 1)]
 
-    return choices(rank, weights=individual_prob, k=1)
-
-
+ 
 def tournament(population, size=5, sharing_cal=False):
     """Tournament selection implementation.
     Args:
@@ -69,21 +67,23 @@ def tournament(population, size=5, sharing_cal=False):
 
     if sharing_cal:
         # Select individuals based on tournament size
-        tournament_indexs = sample(range(len(population)), size)
+        tournament_indexs = sample(range(len(population)),size) 
 
         for i in tournament_indexs:
-            population[i].sharing_fitness = population[i].fitness / sharring_coef(i, population)
+            population[i].sharing_fitness = population[i].fitness / sharring_coef(i,population)
 
-        tournament = [population[i] for i in tournament_indexs]
+        tournament = [population[i] for i in tournament_indexs] 
 
     else:
         # Select individuals based on tournament size
-        tournament = sample(population.individuals, size)
+        tournament = sample(population.individuals,size) 
 
-        # Check if the problem is max or min
+    # Check if the problem is max or min
     if population.optim == 'max':
         return max(tournament, key=attrgetter("fitness"))
     elif population.optim == 'min':
         return min(tournament, key=attrgetter("fitness"))
     else:
         raise Exception("No optimization specified (min or max).")
+
+
