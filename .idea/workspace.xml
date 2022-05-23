@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7caa2a61-4d50-46cc-b4a0-0e1d6b0526de" name="Changes" comment="banco de dados function:&#10;&#10;Missing loop of 30 tests for each combination and stop a test after 40 counts.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/bancodados.py" beforeDir="false" afterPath="$PROJECT_DIR$/bancodados.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/charles/GA.py" beforeDir="false" afterPath="$PROJECT_DIR$/charles/GA.py" afterDir="false" />
+=======
+>>>>>>> Stashed changes
       <change beforePath="$PROJECT_DIR$/solve.py" beforeDir="false" afterPath="$PROJECT_DIR$/solve.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -152,7 +155,39 @@
       <option name="project" value="LOCAL" />
       <updated>1653176796612</updated>
     </task>
+<<<<<<< Updated upstream
     <option name="localTasksCounter" value="7" />
+=======
+    <task id="LOCAL-00007" summary="final version">
+      <created>1653346146916</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1653346146916</updated>
+    </task>
+    <task id="LOCAL-00008" summary="final version">
+      <created>1653348602855</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1653348602855</updated>
+    </task>
+    <task id="LOCAL-00009" summary="final version">
+      <created>1653349166556</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1653349166556</updated>
+    </task>
+    <task id="LOCAL-00010" summary="final version">
+      <created>1653349313701</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1653349313701</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+>>>>>>> Stashed changes
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

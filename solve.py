@@ -69,14 +69,23 @@ if tabela_perform == 'sim':
 create_table_analysis(combinacao, selec_option, co_option)
 
 test_number = 0
+<<<<<<< Updated upstream
 while test_number < 3:
     # fazer o loop para conseguir chegar a fitness igual a zero
+=======
+while test_number < 50:
+    #fazer o loop para conseguir chegar a fitness igual a zero
+>>>>>>> Stashed changes
     count = 0
     flag_sucesso = False
     start = timeit.default_timer()
     # laço para encontrar o fitness
     while flag_sucesso == False:
+<<<<<<< Updated upstream
         if count > 4:
+=======
+        if count > 40:
+>>>>>>> Stashed changes
             break
 
         # inicializa a nova população de offspring
