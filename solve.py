@@ -1,7 +1,7 @@
 from Sudoku.data_sudoku import grid
 from Sudoku.functions import get_neighbour, fitness_max,fitness_min
 from charles.charles import Population, Individual
-from charles.crossover import co_singlepoint,cross_extrems,cycle_co, pmx
+from charles.crossover import cross_extrems,co_singlepoint, cycle_co, pmx
 from charles.mutation import mutation,swap_mutation
 from charles.selection import tournament, roulette, rank
 from charles.GA import GA
@@ -19,7 +19,7 @@ pop_size = 2500
 #GA parameters decision
 co_percent = 0.97
 mut_percent = 0.01
-selec_option = rank
+selec_option = tournament
 co_option = co_singlepoint
 mut_option1 = swap_mutation
 mut_option2 = mutation
