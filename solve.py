@@ -26,7 +26,10 @@ mut_option2 = mutation
 elitism = 0.2
 
 ##PRECISA CRIAR TABELA PERFORM?
-tabela_perform = 'nao'
+tabela_perform = 'sim'
+
+#NÚMERO DA COMBINAÇÃO
+combinacao = 1
 
 # define monkey patch of the charles functions
 if optimization == 'min':
@@ -59,7 +62,7 @@ if tabela_perform == 'sim':
     create_table_perform()
 
 #criar tabela para cada combinação
-create_table_analysis(selec_option,co_option)
+create_table_analysis(combinacao,selec_option,co_option)
 
 test_number = 0
 while test_number < 1:
@@ -112,13 +115,13 @@ while test_number < 1:
 
         count += 1
 
-        insere_teste(test_number,selec_option, co_option, count, best_fit.fitness,pop.variance())
+        insere_teste(test_number,combinacao,selec_option, co_option, count, best_fit.fitness,pop.variance())
 
         print('count:', count,', Fitness: ',best_fit.fitness,',Diversity: ',pop.variance())
 
     stop = timeit.default_timer()
 
-    insere_perform(selec_option, co_option, test_number, stop - start, pop_size, co_percent, mut_percent, mut_option2,mut_percent)
+    insere_perform(combinacao,selec_option, co_option, test_number, stop - start, pop_size, co_percent, mut_percent, elitism)
 
     test_number += 1
 

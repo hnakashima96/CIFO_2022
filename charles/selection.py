@@ -1,8 +1,8 @@
 from random import uniform,choices,sample
 from operator import attrgetter
 
-
 from Sudoku.functions import sharring_coef
+
 
 ### CREATE A ROULETTE WHEEL
 def roulette(population):
@@ -11,12 +11,13 @@ def roulette(population):
         all each individual and each interaction is added the inverse fitness to the position
         variable. With this configuration, higher values of fitness are smaller than lower ones,
         thus the proportion of it in the wheel and in the probabilities.
-    
+
     '''
-    
+
     position = 0
 
-    if population.optim == 'min': 
+    if population.optim == 'min':
+
         sum_all_fitness = sum([1 / ind.fitness for ind in population])
         spin = uniform(0, sum_all_fitness)
         for ind in population:
@@ -42,28 +43,24 @@ def rank(population):
             individual index / AP(n)
         Where AP(n) is the sum of all the index we obtain by the gaussing arithmetic progression formula:
             n * (n+1) / 2    , n = number of elements or the higher index
-    
+
     '''
-    #rank the population by sorting individuals bases on their fitness
+    # rank the population by sorting individuals bases on their fitness
     rank = sorted(population, key=attrgetter("fitness"), reverse=population.optim == 'min')
 
-    #get sum of index's
+    # get sum of index's
     max_index = len(rank)
-    index_sum = ( max_index * (max_index + 1) ) / 2
+    index_sum = (max_index * (max_index + 1)) / 2
 
-    #creat a list with the probability for each individual be selected
-    individual_prob = [ i / index_sum for i in range(1,max_index+1) ] 
+    # creat a list with the probability for each individual be selected
+    individual_prob = [i / index_sum for i in range(1, max_index + 1)]
 
-    return choices(rank, weights=individual_prob, k=1)
-
-
-def tournament(population, size=5, sharing_cal = False ):
+ 
+def tournament(population, size=5, sharing_cal=False):
     """Tournament selection implementation.
-
     Args:
         population (Population): The population we want to select from.
         size (int): Size of the tournament.
-
     Returns:
         Individual: Best individual in the tournament.
     """
