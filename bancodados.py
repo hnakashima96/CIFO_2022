@@ -8,8 +8,8 @@ conntxt = "dbname=postgres user=postgres password=hiromi host=localhost"
 
 def create_table_perform():
     conn = psycopg2.connect(
-        database = 'CIFO', user='postgres', password = 'hiromi',
-        host = 'localhost', port = '5432'
+        database='cifo', user='postgres', password='pradin',
+        host='191.252.201.214', port='5432'
     )
 
     cursor = conn.cursor()
@@ -22,8 +22,8 @@ def create_table_perform():
 
 def insere_perform(n_combinacao, selection, co_option, test_number, time, pop_size, crossover_percent, mut_percent, elitism_percent):
     conn = psycopg2.connect(
-        database='CIFO', user='postgres', password='hiromi',
-        host='localhost', port='5432'
+        database='cifo', user='postgres', password='pradin',
+        host='191.252.201.214', port='5432'
     )
 
     conn.autocommit = True
@@ -43,8 +43,8 @@ def insere_perform(n_combinacao, selection, co_option, test_number, time, pop_si
 
 def create_table_analysis(n_combinacao,selection, co_option):
     conn = psycopg2.connect(
-        database = 'CIFO', user='postgres', password = 'hiromi',
-        host = 'localhost', port = '5432'
+        database='cifo', user='postgres', password='pradin',
+        host='191.252.201.214', port='5432'
     )
     nome = selection.__name__+'_'+co_option.__name__+'_'+str(n_combinacao)
 
@@ -61,8 +61,8 @@ def create_table_analysis(n_combinacao,selection, co_option):
 
 def insere_teste (test_number,n_combinacao,selection, co_option,count, fitness, diversidade):
     conn = psycopg2.connect(
-        database='CIFO', user='postgres', password='hiromi',
-        host='localhost', port='5432'
+        database='cifo', user='postgres', password='pradin',
+        host='191.252.201.214', port='5432'
     )
 
     nome = selection.__name__+'_'+co_option.__name__+'_'+str(n_combinacao)
@@ -75,5 +75,3 @@ def insere_teste (test_number,n_combinacao,selection, co_option,count, fitness, 
 
     conn.commit()
     conn.close()
-
-

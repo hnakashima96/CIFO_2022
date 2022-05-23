@@ -1,7 +1,7 @@
 from random import choice,random
 from charles.crossover import co_singlepoint,cross_extrems,cycle_co
 from charles.mutation import mutation,swap_mutation
-from charles.selection import tournament,tournament2,rank,roulette
+from charles.selection import tournament,rank,roulette
 from charles.charles import Individual
 
 def GA(P,p_cross, p_mu, selec_option, co_option, mut_option1, mut_option2):
