@@ -75,3 +75,5 @@ def insere_teste (test_number,n_combinacao,selection, co_option,count, fitness, 
 
     conn.commit()
     conn.close()
+
+
