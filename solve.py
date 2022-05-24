@@ -20,16 +20,16 @@ pop_size = 2500
 co_percent = 0.97
 mut_percent = 0.01
 selec_option = tournament
-co_option = co_singlepoint
+co_option = cycle_co
 mut_option1 = swap_mutation
 mut_option2 = mutation
-elitism = 0
+elitism = 0.3
 
 ##PRECISA CRIAR TABELA PERFORM?
-tabela_perform = 'sim'
+tabela_perform = 'nao'
 
 #NÚMERO DA COMBINAÇÃO
-combinacao = 1
+combinacao = 17
 
 # define monkey patch of the charles functions
 if optimization == 'min':
@@ -65,7 +65,7 @@ if tabela_perform == 'sim':
 create_table_analysis(combinacao,selec_option,co_option)
 
 test_number = 0
-while test_number < 50:
+while test_number < 30:
     #fazer o loop para conseguir chegar a fitness igual a zero
     count = 0
     flag_sucesso = False
