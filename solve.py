@@ -6,7 +6,7 @@ from charles.mutation import mutation,swap_mutation
 from charles.selection import tournament, roulette, rank
 from charles.GA import GA
 from operator import attrgetter
-from bancodados import create_table_analysis, insere_teste,create_table_perform, insere_perform
+#from bancodados import create_table_analysis, insere_teste,create_table_perform, insere_perform
 import numpy as np
 import timeit
 
@@ -16,15 +16,12 @@ optimization = 'max'
 #Population size definition
 pop_size = 2500
 
-# Population size definition
-pop_size = 400
-
 
 #GA parameters decision
 co_percent = 0.97
 mut_percent = 0.01
-selec_option = tournament
-co_option = cycle_co
+selec_option = rank
+co_option = pmx
 mut_option1 = swap_mutation
 mut_option2 = mutation
 
@@ -32,11 +29,11 @@ elitism = 0.3
 
 
 ##PRECISA CRIAR TABELA PERFORM?
-tabela_perform = 'nao'
+#tabela_perform = 'nao'
 
 
 #NÚMERO DA COMBINAÇÃO
-combinacao = 17
+#combinacao = 17
 
 # define monkey patch of the charles functions
 if optimization == 'min':
@@ -65,11 +62,11 @@ elif pop.optim =='max' and min(pop, key=attrgetter("fitness")).fitness==243:
 
 
 #criar tabela para resultado de performance
-if tabela_perform == 'sim':
-    create_table_perform()
+#if tabela_perform == 'sim':
+#    create_table_perform()
 
 #criar tabela para cada combinação
-create_table_analysis(combinacao,selec_option,co_option)
+#create_table_analysis(combinacao,selec_option,co_option)
 
 test_number = 0
 
@@ -123,13 +120,13 @@ while test_number < 30:
 
         count += 1
 
-        insere_teste(test_number,combinacao,selec_option, co_option, count, best_fit.fitness,pop.variance())
+        #insere_teste(test_number,combinacao,selec_option, co_option, count, best_fit.fitness,pop.variance())
 
         print('count:', count,', Fitness: ',best_fit.fitness,',Diversity: ',pop.variance())
 
     stop = timeit.default_timer()
 
-    insere_perform(combinacao,selec_option, co_option, test_number, stop - start, pop_size, co_percent, mut_percent, elitism)
+    #insere_perform(combinacao,selec_option, co_option, test_number, stop - start, pop_size, co_percent, mut_percent, elitism)
 
     test_number += 1
 

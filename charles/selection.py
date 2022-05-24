@@ -17,7 +17,6 @@ def roulette(population):
     position = 0
 
     if population.optim == 'min':
-
         sum_all_fitness = sum([1 / ind.fitness for ind in population])
         spin = uniform(0, sum_all_fitness)
         for ind in population:
@@ -54,7 +53,8 @@ def rank(population):
 
     # creat a list with the probability for each individual be selected
     individual_prob = [i / index_sum for i in range(1, max_index + 1)]
-
+    
+    return choices(rank, weights=individual_prob, k=1)[0]
  
 def tournament(population, size=5, sharing_cal=False):
     """Tournament selection implementation.
