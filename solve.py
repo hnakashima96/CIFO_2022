@@ -26,7 +26,7 @@ mut_option2 = mutation
 elitism = 0
 
 ##PRECISA CRIAR TABELA PERFORM?
-tabela_perform = 'nao'
+tabela_perform = 'sim'
 
 #NÚMERO DA COMBINAÇÃO
 combinacao = 1
@@ -65,14 +65,14 @@ if tabela_perform == 'sim':
 create_table_analysis(combinacao,selec_option,co_option)
 
 test_number = 0
-while test_number < 1:
+while test_number < 50:
     #fazer o loop para conseguir chegar a fitness igual a zero
     count = 0
     flag_sucesso = False
     start = timeit.default_timer()
     #laço para encontrar o fitness
     while flag_sucesso == False:
-        if count > 50:
+        if count > 40:
             break
         
         #inicializa a nova população de offspring
