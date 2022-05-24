@@ -13,19 +13,12 @@ import timeit
 sudoku_grid = grid
 optimization = 'max'
 
-<<<<<<< Updated upstream
-
 #Population size definition
 pop_size = 2500
-=======
+
 # Population size definition
 pop_size = 400
 
-# GA parameters decision
-=======
-#Population size definition
-pop_size = 2500
->>>>>>> Stashed changes
 
 #GA parameters decision
 co_percent = 0.97
@@ -34,7 +27,6 @@ selec_option = tournament
 co_option = cycle_co
 mut_option1 = swap_mutation
 mut_option2 = mutation
-<<<<<<< Updated upstream
 
 elitism = 0.3
 
@@ -45,16 +37,6 @@ tabela_perform = 'nao'
 
 #NÚMERO DA COMBINAÇÃO
 combinacao = 17
-
-=======
-elitism = 0.3
-
-##PRECISA CRIAR TABELA PERFORM?
-tabela_perform = 'nao'
-
-#NÚMERO DA COMBINAÇÃO
-combinacao = 17
->>>>>>> Stashed changes
 
 # define monkey patch of the charles functions
 if optimization == 'min':
@@ -90,13 +72,9 @@ if tabela_perform == 'sim':
 create_table_analysis(combinacao,selec_option,co_option)
 
 test_number = 0
-<<<<<<< Updated upstream
 
 while test_number < 30:
-=======
-while test_number < 30:
     #fazer o loop para conseguir chegar a fitness igual a zero
->>>>>>> Stashed changes
     count = 0
     flag_sucesso = False
     start = timeit.default_timer()
