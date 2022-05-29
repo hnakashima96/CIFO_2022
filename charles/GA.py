@@ -1,19 +1,14 @@
-from random import choice,random
-from charles.crossover import co_singlepoint,cross_extrems,cycle_co
-from charles.mutation import mutation,swap_mutation
-from charles.selection import tournament,tournament2,rank,roulette
+from random import random
 from charles.charles import Individual
 
-def GA(P,p_cross, p_mu, selec_option, co_option, mut_option1, mut_option2):
-    #inicializa uma probabilidade 
-    p= p_cross
-    p_mu = p_mu
+def GA(P,p_cross, p_mu, selec_option, co_option, mut_option1, mut_option2): 
+
     #selection
     first_sel = selec_option(P)
     second_sel = selec_option(P)
 
     #randomly choose to do crossover or reproduce
-    if random() < p:
+    if random() < p_cross:
         #apply crossover (1 point) in population
         offspring1, offspring2 = co_option(first_sel, second_sel)
     else:
