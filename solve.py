@@ -1,7 +1,7 @@
 from Sudoku.data_sudoku import grid
 from Sudoku.functions import get_neighbour, fitness_max,fitness_min
 from charles.charles import Population, Individual
-from charles.crossover import cross_extrems,co_singlepoint, cycle_co, pmx
+from charles.crossover import co_singlepoint,cycle_co, pmx
 from charles.mutation import mutation,swap_mutation
 from charles.selection import tournament, roulette, rank
 from charles.GA import GA
@@ -16,15 +16,11 @@ optimization = 'max'
 #Population size definition
 pop_size = 2500
 
-
 #GA parameters decision
 co_percent = 0.97
 mut_percent = 0.01
 mut_option1 = swap_mutation
 mut_option2 = mutation
-
-elitism = 0.3
-
 
 sel_list = [tournament, roulette, rank]
 cross_list = [pmx,cycle_co,co_singlepoint]
@@ -120,7 +116,5 @@ for index, combination in enumerate(permutations):
         
         test_number += 1
 
-
 result_table.to_excel("results.xlsx")  
-
 
