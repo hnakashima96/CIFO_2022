@@ -45,7 +45,7 @@ Folder Charles is composed by five main files .py:
 
 The usage of the solve.py is like the following:
 
-solve.py -c <crossover name> -s <selection name> -e <elitism %> -o <optimization type> -p <population number>
+solve.py -c \<crossover name> -s \<selection name> -e \<elitism %> -o \<optimization type> -p \<population number>
 
 where you can add as many crossover/selection names and elitism options taking into consideration:
 
