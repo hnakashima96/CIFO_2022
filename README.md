@@ -68,12 +68,12 @@ The program will run 40 generations 30 times for each combinations of the parame
 
 After running all the combinations a excel file will be saved in the same directory of the solve.py with the results of each generation on each iteration. The informations in the result excel:
 
-combination: numer of the combination,
-test_number: number of the interation,
-co_option : name of the crossover option in this combination,
-selec_option: name of the selection option in this combination,
-elitism: value of the elitism in this combination,
-best fit: best fit of the population for that generation,
-count: generation number,
-variance: variance whitin the population ,
-time: time to run a full generation
+1. combination: numer of the combination,
+2. test_number: number of the interation,
+3. co_option : name of the crossover option in this combination,
+4. selec_option: name of the selection option in this combination,
+5. elitism: value of the elitism in this combination,
+6. best fit: best fit of the population for that generation,
+7. count: generation number,
+8. variance: variance whitin the population ,
+9. time: time to run a full generation
