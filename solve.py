@@ -10,18 +10,31 @@ import numpy as np
 import pandas as pd
 import timeit
 
+#get the sudoku puzzle 
 sudoku_grid = grid
-optimization = 'max'
 
 #Population size definition
-pop_size = 2500
+pop_size = 5000
 
-#GA parameters decision
+#define a sudoku'd first solution initialization function
+Individual.get_neighbours = get_neighbour
+
+#optimization type of the fitness function
+optimization = 'max'
+
+#define the fitness function based in the optimization type
+if optimization == 'min':
+    Individual.fitness = fitness_min
+else:
+    Individual.fitness = fitness_max
+
+#Genetic Operators parameters decision
 co_percent = 0.97
 mut_percent = 0.01
 mut_option1 = swap_mutation
 mut_option2 = mutation
 
+#list with combinations of Genetic Operators
 sel_list = [tournament, roulette, rank]
 cross_list = [pmx,cycle_co,co_singlepoint]
 elitism_list=[0,0.3]
@@ -31,37 +44,31 @@ for x in sel_list:
         for e in elitism_list:
             permutations.append([x,y,e])
 
-# define monkey patch of the charles functions
-if optimization == 'min':
-    Individual.fitness = fitness_min
-else:
-    Individual.fitness = fitness_max
-
-Individual.get_neighbours = get_neighbour
-
+#create a empty dataframe to store the results
 result_table = pd.DataFrame()
 
+#iterator over every combination of Genetic Operators
 for index, combination in enumerate(permutations):
     
+    #for each combination of Genetic Operators run 30 iterations
     test_number = 0
     while test_number < 30:
         
-        #initial population
+        #initialize population
         pop = Population(
                     size=pop_size,
                     optim=optimization,
                     grid=sudoku_grid
                 )
 
-        #fazer o loop para conseguir chegar a fitness igual a zero
         count = 0
         start = 0
         stop = 0
 
-        #laço para encontrar o fitness
+        #loop for 40 generations or until find the optimum fit
         while count <= 40:
             
-            # pega o indivíduo com o melhor fitness
+            #get the individual with best fitness
             if pop.optim == 'min':
                 best_fit = min(pop, key=attrgetter("fitness"))
             elif pop.optim == 'max':
@@ -69,6 +76,7 @@ for index, combination in enumerate(permutations):
 
             print('permutation',index+1,'test_number',test_number, ', count:', count,', Fitness: ',best_fit.fitness,',Diversity: ',pop.variance())
             
+            #store the best fitness in the results table
             new_row = pd.DataFrame({'combination': [index+1],
                                     'test_number': [test_number+1],
                                     'co_option':[combination[1].__name__],
@@ -81,6 +89,7 @@ for index, combination in enumerate(permutations):
 
             result_table = pd.concat([result_table,new_row], ignore_index=True)
 
+            #stops loop if the optimum solution is found
             if pop.optim =='min' and best_fit.fitness==0:
                 print(np.abs(best_fit.solution))
                 break
@@ -90,24 +99,25 @@ for index, combination in enumerate(permutations):
 
             start = timeit.default_timer()
             
-            #inicializa a nova população de offspring
+            #initialize the offspring population
             off_pop = Population(0,optimization,grid)
             
+            #if elitims is greater than 0
             if combination[2] > 0:
-                # Armazenar a porcentagens de novos indivíduos
+                #define the number of individuals that are the elit
                 eli_number = int(pop_size*combination[2])
 
-                #orderna população do elitismo de acordo com o optimization
+                #sort the population based in the fitness
                 eli_pop_sort = sorted(pop.individuals, key=lambda x:x.fitness, reverse=pop.optim == 'max')
 
-                #adiciona a população do elitismo de acordo com a ordem
+                #add in the new offspring population the number of indiciduals that are elit accorinding to the previews sort
                 off_pop.individuals.extend(eli_pop_sort[:eli_number])
 
-            #completa o resto da população com GA
+            #loop over evolution process until the population of the offspring is the same size of the parent population
             while len(off_pop) < pop_size:
                 off_pop.individuals.extend(GA(pop, co_percent, mut_percent, combination[0], combination[1], mut_option1, mut_option2))
 
-            #a população de offspring vira a nova parent population
+            #the offspring population becames the new parent population
             pop = off_pop
 
             stop = timeit.default_timer()
@@ -116,5 +126,6 @@ for index, combination in enumerate(permutations):
         
         test_number += 1
 
-result_table.to_excel("results.xlsx")  
+#save results to a excel table
+result_table.to_excel("results5000.xlsx")  
 

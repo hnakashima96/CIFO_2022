@@ -17,7 +17,7 @@ def mutation(ind):
             position_numbers.append(index)
             change_numbers.append(value)
 
-    #permutation of possible values (mutation)
+    #permutation of possible values 
     possible = list(permutations(change_numbers))
     mutation = random.randrange(math.factorial(len(change_numbers)))
     
