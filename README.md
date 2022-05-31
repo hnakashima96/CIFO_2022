@@ -61,3 +61,19 @@ example:
 python solve.py -c pmx -c co_singlepoint -s rank -e 0.5 -e 0 -o min -p 100
 
 for this example the program would run all the combinations for the 2 types of crossover (pmx and co_singlepoint), 1 selection method (rank), 2 elitism options (0.5 and 0), minimization type of optimization and population of 100.
+
+## Output:
+
+The program will run 40 generations 30 times for each combinations of the parameters passed in the solve.py
+
+After running all the combinations a excel file will be saved in the same directory of the solve.py with the results of each generation on each iteration. The informations in the result excel:
+
+combination: numer of the combination,
+test_number: number of the interation,
+co_option : name of the crossover option in this combination,
+selec_option: name of the selection option in this combination,
+elitism: value of the elitism in this combination,
+best fit: best fit of the population for that generation,
+count: generation number,
+variance: variance whitin the population ,
+time: time to run a full generation
