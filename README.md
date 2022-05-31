@@ -60,4 +60,4 @@ example:
 
 python solve.py -c pmx -c co_singlepoint -s rank -e 0.5 -e 0 -o min -p 100
 
-for this example the program would run all the combinations for the 2 types of crossover (pmx and co_singlepoint), 1 selection method (rank), 1 elitism option (0.5), minimization type of optimization and population of 100.
+for this example the program would run all the combinations for the 2 types of crossover (pmx and co_singlepoint), 1 selection method (rank), 2 elitism options (0.5 and 0), minimization type of optimization and population of 100.
