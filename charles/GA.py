@@ -24,4 +24,3 @@ def GA(P,p_cross, p_mu, selec_option, co_option, mut_option1, mut_option2):
     final_offspring2 = Individual(offspring2.solution)
 
     return [final_offspring1, final_offspring2]
-

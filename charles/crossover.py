@@ -3,9 +3,11 @@ import numpy as np
 
 
 def co_singlepoint(p1, p2):
-    #apply crossover (1 point)
+    
+    #pick a random row number to perform the mutation
     co_point = random.randint(1, len(p1.solution)-1)
 
+    #swap the upper from the picked co_point between individuals
     offspring1 = np.vstack((p1.solution[:co_point],p2.solution[co_point:]))
     offspring2 = np.vstack((p2.solution[:co_point],p1.solution[co_point:]))
   
@@ -14,10 +16,12 @@ def co_singlepoint(p1, p2):
 
     return p1, p2
 
-### PARALLEL MAPPED CROSSOVER
 
 def pmx(p1,p2):
-
+    '''
+        Adapted version from:
+        https://github.com/SCK22/GeneticAlgorithmTSP/blob/master/GeneticAlgoLibrary.py
+    '''
     rows = random.sample(range(9), random.randint(1, 9))
 
     for k in rows:
@@ -27,7 +31,6 @@ def pmx(p1,p2):
         genes2 = p2.solution[k, :]
         genes2 = np.extract(genes2 < 0, genes2)
 
-        #https://github.com/SCK22/GeneticAlgorithmTSP/blob/master/GeneticAlgoLibrary.py
         indexes_for_crossover = random.sample((range(len(genes1))), 2)
         co_start_point, co_end_point = (min(indexes_for_crossover), max(indexes_for_crossover))
 
@@ -79,41 +82,11 @@ def pmx(p1,p2):
 
     return p1, p2
 
-
-
-###CREATE CROSSOVER BETWEEN EXTREMES
-def cross_extrems(p1, p2):
-    
-    rows = random.sample(range(9),random.randint(1,9))
-
-    for i in rows:
-        genes1 = p1.solution[i,:]
-        print('genes1',genes1)
-        genes1 = np.extract(genes1<0,genes1)
-        print('genes1', genes1)
-
-        genes2 = p2.solution[i,:]
-        genes2 = np.extract(genes2<0,genes2)
-
-        genes1[0], genes1[-1] = genes2[-1], genes2[0]
-
-        print(set(genes1))
-
-        while len(set(genes1)) < len(genes1):
-           genes1[0] = genes1[random.randint(1,len(genes1))] 
-           genes1[0], genes1[-1] = genes2[-1], genes2[0]
-
-        print(genes1)
-
-        np.place(p1.solution[i,:],p1.solution[i,:]<0,genes2)
-        np.place(p2.solution[i,:],p2.solution[i,:]<0,genes1)
-
-    print(p1)
-
-    return p1, p2
-
 def cycle_co(p1, p2):
-    """Implementation of cycle crossover.
+    """
+    Taken from class.
+
+    Implementation of cycle crossover.
 
     Args:
         p1 (Individual): First parent for crossover.
@@ -123,15 +96,13 @@ def cycle_co(p1, p2):
         Individuals: Two offspring, resulting from the crossover.
     """
 
-
-    #rows = random.sample(range(9),random.randint(1,9))
+    #select 5 random rows to perform this operation
     rows = random.sample(range(9),5)
+
     for row in rows:
 
         genes1 = p1.solution[row,:]
-        # print('genes1',genes1)
         genes1 = list(np.extract(genes1<0,genes1))
-        # print('genes1',genes1)
 
         genes2 = p2.solution[row,:]
         genes2 = list(np.extract(genes2<0,genes2))
@@ -140,7 +111,7 @@ def cycle_co(p1, p2):
             genes1.reverse()
         # Offspring placeholders - None values make it easy to debug for errors
         offspring1 = [None] * len(genes1)
-        # print('off1',offspring1)
+        
         offspring2 = [None] * len(genes1)
         # While there are still None values in offspring, get the first index of
         # None and start a "cycle" according to the cycle crossover method
@@ -165,7 +136,6 @@ def cycle_co(p1, p2):
         np.place(p1.solution[row,:],p1.solution[row,:]<0,offspring1)
         np.place(p2.solution[row,:],p2.solution[row,:]<0,offspring2)
 
-        # print(p1)
 
     return p1, p2
 

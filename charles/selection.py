@@ -1,16 +1,14 @@
 from random import uniform,choices,sample
 from operator import attrgetter
 
-from Sudoku.functions import sharring_coef
 
-
-### CREATE A ROULETTE WHEEL
 def roulette(population):
     '''
-        The roulette wheel for the minization problem considers the sum of inverse fitness of
-        all each individual and each interaction is added the inverse fitness to the position
-        variable. With this configuration, higher values of fitness are smaller than lower ones,
-        thus the proportion of it in the wheel and in the probabilities.
+        The roulette wheel for the minization problem considers the sum of the inverse fitness of
+        each individual instead of normal fitness. After, in the iteretion part, instead of adding
+        the fitness as it is, it is added the inverse fitness to the position variable. With this
+        configuration, individuals with lower fitness have a bigger share of the wheel and, thus the 
+        probabilities.
 
     '''
 
@@ -32,7 +30,7 @@ def roulette(population):
             if position > spin:
                 return ind
 
-### CREATE RANKING SELECTION
+
 def rank(population):
     '''
         The rank selection considered the probability of select an individual based in his position in the 
@@ -56,7 +54,7 @@ def rank(population):
     
     return choices(rank, weights=individual_prob, k=1)[0]
  
-def tournament(population, size=5, sharing_cal=False):
+def tournament(population, size=5):
     """Tournament selection implementation.
     Args:
         population (Population): The population we want to select from.
@@ -64,19 +62,9 @@ def tournament(population, size=5, sharing_cal=False):
     Returns:
         Individual: Best individual in the tournament.
     """
-
-    if sharing_cal:
-        # Select individuals based on tournament size
-        tournament_indexs = sample(range(len(population)),size) 
-
-        for i in tournament_indexs:
-            population[i].sharing_fitness = population[i].fitness / sharring_coef(i,population)
-
-        tournament = [population[i] for i in tournament_indexs] 
-
-    else:
-        # Select individuals based on tournament size
-        tournament = sample(population.individuals,size) 
+    
+    # Select individuals based on tournament size
+    tournament = sample(population.individuals,size) 
 
     # Check if the problem is max or min
     if population.optim == 'max':
