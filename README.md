@@ -41,4 +41,17 @@ Folder Charles is composed by five main files .py:
  
  solve.py: is the code which combine the problem and the Genetic Algorithm in order to solve.
  
- 
+## How to call the solve.py
+
+The usage of the solve.py is like the following:
+
+solve.py -c <crossover name> -s <selection name> -e <elitism %> -o <optimization type> -p <population number>
+
+where you can add as many crossover/selection names and elitism options taking into consideration:
+
+- If you add more than one option for crossover, selection or elitism the program will run all the permutation of these choices.
+- Available options for crossover: 'pmx','cycle_co','co_singlepoint'
+- Available options for selection: 'tournament', 'roulette', 'rank'
+- Elitism should be a float number between 0 and 1
+- Available options for optimization type: 'min', 'max'
+- Population should be a integer number
