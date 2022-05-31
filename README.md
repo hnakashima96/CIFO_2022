@@ -48,10 +48,16 @@ The usage of the solve.py is like the following:
 solve.py -c \<crossover name> -s \<selection name> -e \<elitism %> -o \<optimization type> -p \<population number>
 
 where you can add as many crossover/selection names and elitism options taking into consideration:
+- -c: Available options for crossover: pmx,cycle_co,co_singlepoint
+- -s: Available options for selection: tournament, roulette, rank
+- -e: Elitism should be a float number between 0 and 1
+- -o: Available options for optimization type: min, max
+- -p: Population should be a integer number
 
 - If you add more than one option for crossover, selection or elitism the program will run all the permutation of these choices.
-- Available options for crossover: 'pmx','cycle_co','co_singlepoint'
-- Available options for selection: 'tournament', 'roulette', 'rank'
-- Elitism should be a float number between 0 and 1
-- Available options for optimization type: 'min', 'max'
-- Population should be a integer number
+
+example:
+
+python solve.py -c pmx -c co_singlepoint -s rank -e 0.5 -e 0 -o min -p 100
+
+for this example the program would run all the combinations for the 2 types of crossover (pmx and co_singlepoint), 1 selection method (rank), 1 elitism option (0.5), minimization type of optimization and population of 100.
